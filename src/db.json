@@ -1,15 +1,29 @@
 {
-	"users": {
-		"id": "001",
-		"login": "ivan",
-		"password": "1234qwer",
-		"roles_id": 0,
-		"registred_at": "2025.01.12"
-	},
+	"users": [
+		{
+			"id": "001",
+			"login": "ivan",
+			"password": "1234qwer",
+			"role_id": 0,
+			"registred_at": "2025.01.12"
+		}
+	],
 	"roles": [
 		{
 			"id": 0,
 			"name": "Администратор"
+		},
+		{
+			"id": 1,
+			"name": "Модератор"
+		},
+		{
+			"id": 2,
+			"name": "Читатель"
+		},
+		{
+			"id": 3,
+			"name": "Гость"
 		}
 	],
 	"posts": [
