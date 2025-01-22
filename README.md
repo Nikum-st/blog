@@ -9,7 +9,7 @@
 
 3. Таблица БД:
 
-    - Пользователь: id / login / password / roles_id / registred_at;
+    - Пользователь: id / login / password / roles_id / registred_at
     - Роль пользователя: id / name
     - Комментарий: id / content / autor_id / post_id
     - Статья: id / title / content / publised_at / image_url
@@ -19,7 +19,7 @@
     - Сессия текущего пользователя: login / passowrd / role;
 
 5. Схема для redux store(на кленте) :
-    - user: id / login / roleId;
+    - user: id / login / roleId / session;
     - posts: массив post: id / title / publisedAt / imgURL / commentsCount
     - post: id / title / imgURl / content / publisedId / comments: массив comment: id / autor / content / publisedId
     - users: массив user: id / login /registredAt / role

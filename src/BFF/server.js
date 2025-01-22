@@ -1,8 +1,10 @@
-import { createSession } from './session';
 import { addUserToServer, getUser } from './utils';
-import { ROLE } from '../constants/role';
+import { sessions } from './utils/sessions';
 
 export const server = {
+	async logOut(session) {
+		sessions.remove(session);
+	},
 	async authorization(authLogin, authPassword) {
 		const user = await getUser(authLogin);
 
@@ -22,24 +24,36 @@ export const server = {
 
 		return {
 			error: null,
-			res: createSession(user.role_id),
+			res: {
+				id: user.id,
+				login: user.login,
+				roleId: user.role_id,
+				session: sessions.create(user),
+			},
 		};
 	},
 	async registration(regLogin, regPassword) {
-		const user = await getUser(regLogin);
+		const extendedUser = await getUser(regLogin);
 
-		if (user) {
+		if (extendedUser) {
 			return {
 				error: 'Такой логин уже существует.Придумайте другой',
 				res: null,
 			};
 		}
 
-		await addUserToServer(regLogin, regPassword);
+		const user = await addUserToServer(regLogin, regPassword);
+
+		console.log(user);
 
 		return {
 			error: null,
-			res: createSession(ROLE.READER),
+			res: {
+				id: user.id,
+				login: user.login,
+				roleId: user.role_id,
+				session: sessions.create(user),
+			},
 		};
 	},
 };
