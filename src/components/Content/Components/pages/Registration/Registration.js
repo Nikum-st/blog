@@ -1,30 +1,31 @@
-import styled from 'styled-components';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { yupSchema } from '../../../../../yup/yup';
+import { Button, ErrorMessage, H2, Input } from '../../../../components';
 import { useForm } from 'react-hook-form';
+import { server } from '../../../../../BFF/server';
 import { useState } from 'react';
-import { Button, ErrorMessage, H2, Input } from '../../../components';
-import { Link, useNavigate } from 'react-router-dom';
-import { yupSchema } from '../../../../yup/yup';
-import { server } from '../../../../BFF/server';
-import { setUser } from '../../../../store';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useResetAuth } from '../../../../hooks';
+import { useResetAuth } from '../../../../../hooks';
+import { setUser } from '../../../../../store';
+import styled from 'styled-components';
 
-const LinkStiled = styled(Link)`
-	margin: 17px;
-	color: #4300ff;
-	text-decoration: underline;
-	&:hover {
-		color: rgb(31, 0, 172);
-		text-decoration: none;
-	}
-`;
-
-const AuthorizationContainer = ({ className }) => {
+export const RegistrationContainer = ({ className }) => {
 	const [errorServer, setErrorServer] = useState(null);
 
-	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	const onSubmit = ({ login, password }) => {
+		server.registration(login, password).then(({ error, res }) => {
+			if (error) {
+				setErrorServer(error);
+				return;
+			}
+			dispatch(setUser(res));
+			navigate('/');
+		});
+	};
 
 	const {
 		register,
@@ -35,27 +36,22 @@ const AuthorizationContainer = ({ className }) => {
 		defaultValues: {
 			login: '',
 			password: '',
+			passcheck: '',
 		},
-		resolver: yupResolver(yupSchema.authorization),
+		resolver: yupResolver(yupSchema.registration),
 	});
 
 	useResetAuth(reset);
 
-	const onSubmit = ({ login, password }) => {
-		server.authorization(login, password).then(({ error, res }) => {
-			if (error) {
-				setErrorServer(error);
-				return;
-			}
-			dispatch(setUser(res));
-			navigate('/');
-		});
-	};
-	const errorMessage = errors.login?.message || errors.password?.message || errorServer;
+	const errorMessage =
+		errors.login?.message ||
+		errors.password?.message ||
+		errors.passcheck?.message ||
+		errorServer;
 
 	return (
 		<div className={className}>
-			<H2>Авторизация</H2>
+			<H2>Регистрация</H2>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Input
 					type="text"
@@ -75,17 +71,25 @@ const AuthorizationContainer = ({ className }) => {
 						},
 					})}
 				/>
+				<Input
+					type="text"
+					placeholder="Повторите пароль..."
+					{...register(`passcheck`, {
+						onChange: () => {
+							setErrorServer(null);
+						},
+					})}
+				/>
 				<Button type="submit" width="100%" disabled={!!errorServer}>
-					Авторизоваться
+					Зарегестрироваться
 				</Button>
 			</form>
 			{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-			<LinkStiled to="/register">Регистрация</LinkStiled>
 		</div>
 	);
 };
 
-export const Authorization = styled(AuthorizationContainer)`
+export const Registration = styled(RegistrationContainer)`
 	display: flex;
 	align-items: center;
 	flex-direction: column;
