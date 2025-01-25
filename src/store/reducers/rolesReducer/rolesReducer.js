@@ -1,12 +1,12 @@
 import { ACTION_TYPE } from '../../../constants';
 
-const initialStateUsers = [];
+const initialStateRoles = {};
 
-export const usersReducer = (state = initialStateUsers, action) => {
+export const rolesReducer = (state = initialStateRoles, action) => {
 	const { type, payload } = action;
 
 	switch (type) {
-		case ACTION_TYPE.USERS.SET_USERS:
+		case ACTION_TYPE.ROLES.SET_ROLES:
 			return payload;
 		default:
 			return state;

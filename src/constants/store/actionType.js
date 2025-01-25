@@ -3,4 +3,10 @@ export const ACTION_TYPE = {
 		SET_USER: 'USER/SET_USER',
 		LOG_OUT: 'USER/LOG_OUT',
 	},
+	USERS: {
+		SET_USERS: 'USERS/SET_USERS',
+	},
+	ROLES: {
+		SET_ROLES: 'ROLES/SET_ROLES',
+	},
 };
