@@ -10,21 +10,21 @@ const TableHeaderContainer = ({ className }) => (
 
 export const TableHeader = styled(TableHeaderContainer)`
 	display: flex;
-	width: 530px;
+	width: 725px;
 	align-items: center;
 	margin: 10px;
-	font-size: 17px;
+	font-size: 19px;
 
 	& .login-label {
 		padding-left: 9px;
-		margin-right: 130px;
+		margin-right: 156px;
 	}
 
 	& .date-rgistration-label {
-		margin-right: 63px;
+		margin-right: 102px;
 	}
 
 	& .role-label {
-		margin-right: 49px;
+		margin-right: 50px;
 	}
 `;

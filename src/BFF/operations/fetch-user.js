@@ -1,6 +1,6 @@
-import { getData } from './get-dates';
+import { getData } from '../api/get-dates';
 
-export const getUser = async (loginToFind) => {
+export const fetchUser = async (loginToFind) => {
 	try {
 		const users = await getData('users');
 		if (!users) {

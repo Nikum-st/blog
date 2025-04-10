@@ -1,18 +1,18 @@
 {
   "users": [
     {
-      "id": "001",
+      "id": "cbd3",
       "login": "Nikum_st",
       "password": "1234qwer",
-      "role_id": 2,
-      "registred_at": "2025.01.12"
+      "role_id": 0,
+      "registred_at": "09.04.2025"
     },
     {
-      "id": "046e",
-      "login": "ivan",
+      "id": "cbd3jjj",
+      "login": "Ivan",
       "password": "1234qwer",
       "role_id": 2,
-      "registred_at": "19.01.2025"
+      "registred_at": "09.04.2025"
     }
   ],
   "roles": [
@@ -105,5 +105,16 @@
       "image_url": "https://fastly.picsum.photos/id/233/280/150.jpg?hmac=jPiblLxj22aCZjyBtpw1du-g7XPMfaiEJUtLxri3JoE"
     }
   ],
-  "comments": []
+  "comments": [],
+  "sessions": [
+    {
+      "id": "d621",
+      "hash": "0.65347775812273622975112630228977650403976440429688",
+      "user": {
+        "id": "cbd3",
+        "login": "Nikum_st",
+        "roleId": 0
+      }
+    }
+  ]
 }

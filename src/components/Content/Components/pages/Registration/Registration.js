@@ -2,27 +2,29 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { yupSchema } from '../../../../../yup/yup';
 import { Button, ErrorMessage, H2, Input } from '../../../../components';
 import { useForm } from 'react-hook-form';
-import { server } from '../../../../../BFF/server';
+import { server } from '../../../../../BFF/index';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useResetAuth } from '../../../../../hooks';
+import { useRequestServer, useResetAuth } from '../../../../../hooks';
 import { setUser } from '../../../../../store';
 import styled from 'styled-components';
 
 export const RegistrationContainer = ({ className }) => {
 	const [errorServer, setErrorServer] = useState(null);
+	const serverRequest = useRequestServer();
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const onSubmit = ({ login, password }) => {
-		server.registration(login, password).then(({ error, res }) => {
+	const onSubmit = async ({ login, password }) => {
+		await serverRequest('registration', login, password).then(({ error, res }) => {
 			if (error) {
 				setErrorServer(error);
 				return;
 			}
 			dispatch(setUser(res));
+			sessionStorage.setItem('user', JSON.stringify(res));
 			navigate('/');
 		});
 	};

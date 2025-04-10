@@ -1,53 +1,76 @@
 import styled from 'styled-components';
-import { Icon } from '../../../../../components';
-import { useSelector } from 'react-redux';
-import { selectRolesFromServer, selectUsers } from '../../../../../../store';
-import { useGetUsers, useGetRolesFromServer } from '../../../../../../hooks';
+import { ErrorMessage, Icon } from '../../../../../components';
+import { useState } from 'react';
+import { useRequestServer } from '../../../../../../hooks/use-request-server';
+import { ROLE } from '../../../../../../constants';
+import { useDispatch } from 'react-redux';
+import { deletUserAsync } from '../../../../../../store';
 
-const UserRawContainer = ({ className }) => {
-	useGetUsers();
-	useGetRolesFromServer();
-	const users = useSelector(selectUsers);
-	const roles = useSelector(selectRolesFromServer);
+const UserRawContainer = ({ className, id, login, registredAt, roleId, roles, key }) => {
+	const [selectedRole, setSelectedRole] = useState(roleId);
+	const [error, setError] = useState(null);
+	const [savedRole, setSavedRole] = useState(null);
+	const serverRequest = useRequestServer();
+	const dispatch = useDispatch();
 
+	const handleChangeRole = ({ target }) => {
+		setSelectedRole(target.value);
+	};
+	const saveRoleForUser = async (selectedRole, userId) => {
+		const result = await serverRequest(
+			`updateUserRole`,
+			Number(selectedRole),
+			userId,
+		);
+		if (result.error) {
+			setError(result.error);
+		} else if (result.res) {
+			setSavedRole(true);
+		}
+	};
+
+	const deleteUser = async (userId) => {
+		const { error, res } = await dispatch(deletUserAsync(serverRequest, userId));
+		if (error) {
+			setError(error);
+		}
+	};
 	return (
-		<div>
-			{users.map(({ id, login, registredAt, roleId }) => (
-				<div className={className} key={id}>
-					<div className="login">{login}</div>
-					<div className="date-registration">{registredAt}</div>
-					<select
-						value={roleId}
-						onChange={(e) => console.log(`Изменение роли: ${e.target.value}`)}
-					>
-						<option value={roles[0].id}>{roles[0].name}</option>
-						<option value={roles[1].id}>{roles[1].name}</option>
-						<option value={roles[2].id}>{roles[2].name}</option>
-						<option value={roles[3].id}>{roles[3].name}</option>
-					</select>
-					<div className="icons">
-						<Icon
-							id={'fa-floppy-o'}
-							size={'18px'}
-							margin="0px 0px 0px 10px"
-							cursor={'pointer'}
-							onClick={() =>
-								console.log(`Сохранить пользователя с ID: ${id}`)
-							}
-						/>
-						<Icon
-							id="fa-trash-o"
-							size="18px"
-							margin="0px 0px 0px 10px"
-							cursor="pointer"
-							onClick={() =>
-								console.log(`Удалить пользователя с ID: ${id}`)
-							}
-						/>
-					</div>
+		<>
+			<div className={className} key={key}>
+				<div className="login">{login}</div>
+				<div className="date-registration">{registredAt}</div>
+				<select value={selectedRole} onChange={handleChangeRole}>
+					{roles
+						?.filter(({ id }) => id !== ROLE.GUEST)
+						.map(({ id, name }) => {
+							return (
+								<option key={id} value={id}>
+									{name}
+								</option>
+							);
+						})}
+				</select>
+				<div className="icons">
+					<Icon
+						id={'fa-floppy-o'}
+						size={'24px'}
+						margin="0px 0px 0px 10px"
+						cursor={'pointer'}
+						savedRole={savedRole}
+						onClick={() => saveRoleForUser(selectedRole, id)}
+					/>
+					<Icon
+						id="fa-trash-o"
+						size="24px"
+						margin="0px 0px 0px 10px"
+						cursor="pointer"
+						onClick={() => deleteUser(id)}
+					/>
 				</div>
-			))}
-		</div>
+			</div>
+			{error && <ErrorMessage>{error}</ErrorMessage>}
+		</>
 	);
 };
 
@@ -56,10 +79,11 @@ export const UserRaw = styled(UserRawContainer)`
 	border: 2px solid;
 	display: flex;
 	justify-content: space-between;
-	width: 540px;
+	width: 725px;
 	align-items: center;
 	margin: 10px;
-	font-size: 17px;
+	font-size: 19px;
+	height: 56px;
 
 	& .login {
 		display: flex;
@@ -75,5 +99,10 @@ export const UserRaw = styled(UserRawContainer)`
 	}
 	& .icons {
 		display: flex;
+	}
+	& select {
+		width: 161px;
+		height: 36px;
+		font-size: 18px;
 	}
 `;

@@ -17,21 +17,19 @@ const ControlPanelContainer = ({ className }) => {
 	const roleId = useSelector(selectRole);
 	const login = useSelector(selectLogin);
 
-	return (
+	return roleId === ROLE.GUEST ? (
+		<Container>
+			<Link to="/login">
+				<Button width="85px">Войти</Button>
+			</Link>
+		</Container>
+	) : (
 		<div className={className}>
 			<Container>
-				{roleId !== ROLE.GUEST ? (
-					<>
-						<Login size="15px" margin="0px 10px" weight="500">
-							{login}
-						</Login>
-						<OutLog />
-					</>
-				) : (
-					<Link to="/login">
-						<Button width="85px">Войти</Button>
-					</Link>
-				)}
+				<Login size="15px" margin="0px 10px" weight="500">
+					{login}
+				</Login>
+				<OutLog />
 			</Container>
 			<Container>
 				<div onClick={() => navigate(-1)}>

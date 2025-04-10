@@ -1,15 +1,63 @@
-import { H2 } from '../../../../components';
+import { H2, Wrapper } from '../../../../components';
 import styled from 'styled-components';
 import { TableHeader } from './components/TableHeader';
 import { UserRaw } from './components/UserRaw';
+import { useEffect, useState } from 'react';
+import { loading, selectUsers, setUsers } from '../../../../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRequestServer } from '../../../../../hooks/use-request-server';
+import { useNavigate } from 'react-router-dom';
 
 export const UsersContainer = ({ className }) => {
+	const [roles, setRoles] = useState([]);
+	const [error, setError] = useState(null);
+	const dispatch = useDispatch();
+	const serverRequest = useRequestServer();
+	const navigate = useNavigate();
+	const users = useSelector(selectUsers);
+
+	useEffect(() => {
+		const getRoles = async () => {
+			try {
+				dispatch(loading(true));
+				const [userResult, rolesResult] = await Promise.all([
+					serverRequest('fetchUsers'),
+					serverRequest(`fetchRolesFromServer`),
+				]);
+				if (userResult?.error || rolesResult?.error) {
+					setError(userResult.error || rolesResult.error);
+					setTimeout(() => {
+						navigate('/');
+					}, 1500);
+				}
+				setRoles(rolesResult?.res);
+				dispatch(setUsers(userResult?.res));
+			} catch (e) {
+				console.log(e);
+			} finally {
+				dispatch(loading(false));
+			}
+		};
+		getRoles();
+	}, [dispatch, serverRequest, navigate]);
+
 	return (
-		<div className={className}>
-			<H2>Пользователи</H2>
-			<TableHeader />
-			<UserRaw />
-		</div>
+		<Wrapper error={error}>
+			<div className={className}>
+				<H2>Пользователи</H2>
+				<TableHeader />
+				{users?.map(({ id, login, registredAt, roleId }) => (
+					<UserRaw
+						id={id}
+						key={id}
+						login={login}
+						registredAt={registredAt}
+						roleId={roleId}
+						roles={roles}
+					/>
+				))}
+			</div>
+		</Wrapper>
 	);
 };
 

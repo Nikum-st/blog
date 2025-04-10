@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { getRolesFromServer } from '../BFF/utils';
+import { fetchRolesFromServer } from '../BFF/operations';
 import { useDispatch } from 'react-redux';
 import { setRoles } from '../store';
 
@@ -7,7 +7,7 @@ export const useGetRolesFromServer = () => {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		const fetchRoles = async () => {
-			const roles = await getRolesFromServer();
+			const roles = await fetchRolesFromServer();
 			if (!roles) {
 				console.error('Роли не найдены или произошла ошибка.');
 				return;

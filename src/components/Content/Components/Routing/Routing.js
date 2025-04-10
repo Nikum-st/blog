@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { Users, Registration, Authorization } from '../pages';
+import { Users, Registration, Authorization, Error404Page } from '../pages';
 
 export const Routing = () => (
 	<Routes>
@@ -9,6 +9,6 @@ export const Routing = () => (
 		<Route path="/users" element={<Users />}></Route>
 		<Route path="/post" element={<div>Страница создания статьи</div>}></Route>
 		<Route path="/post/:postId" element={<div>Сраница статьи</div>}></Route>
-		<Route path="*" element={<div>Ошибка</div>}></Route>
+		<Route path="*" element={<Error404Page />}></Route>
 	</Routes>
 );

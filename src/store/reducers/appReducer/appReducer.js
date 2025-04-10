@@ -10,7 +10,10 @@ export const appReducer = (state = initialStateApp, action) => {
 				...state,
 				wasLogout: !state.wasLogout,
 			};
-
+		case ACTION_TYPE.APP.LOADING:
+			return {
+				loading: payload,
+			};
 		default:
 			return state;
 	}

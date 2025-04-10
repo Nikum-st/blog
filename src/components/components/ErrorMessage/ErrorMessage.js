@@ -11,4 +11,5 @@ export const ErrorMessage = styled(ErrorMessageContainer)`
 	padding: 10px;
 	margin: 15px;
 	background: #f65b5b75;
+	justify-content: center;
 `;
