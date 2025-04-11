@@ -24,7 +24,7 @@ export const fetchUsers = async (sessionHash) => {
 				registredAt: user.registred_at,
 			})),
 		};
-	} catch {
-		return null;
+	} catch (error) {
+		throw new Error(error);
 	}
 };

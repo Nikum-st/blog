@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const LogoContainer = ({ className }) => (
 	<Link to="/" className={className}>
-		<Icon id="fa-code" size="48px" margin="13px" cursor="poiner" />
+		<Icon id="fa-code" size="48px" margin="13px" cursor="pointer" />
 		<div>
 			<FirstWord>Блог</FirstWord>
 			<SecondWord>веб-разработчика</SecondWord>

@@ -10,5 +10,5 @@ export const Icon = styled(IconContainer)`
 	color: ${({ savedRole }) => (savedRole ? '#00000052' : '#000000')};
 	font-size: ${({ size = '10px' }) => size};
 	margin: ${({ margin = '0px' }) => margin};
-	cursor: ${({ cursor = 'none' }) => cursor};
+	cursor: ${({ cursor = 'auto' }) => cursor};
 `;

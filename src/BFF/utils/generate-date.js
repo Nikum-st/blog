@@ -3,4 +3,4 @@ import 'moment/locale/ru';
 
 moment.locale('ru');
 
-export const generateDate = moment().format('L');
+export const generateDate = moment().format('L, HH:mm');

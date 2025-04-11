@@ -9,3 +9,6 @@ export * from './fetch-session';
 export * from './delete-session-from-server';
 export * from './updated-user-role';
 export * from './delete-user';
+export * from './fetch-post';
+export * from './add-comment';
+export * from './delete-comment';

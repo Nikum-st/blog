@@ -19,7 +19,7 @@ export const updateUserRole = async (newRole, userId, sessionHash) => {
 			}),
 		});
 		return { error: null, res: true };
-	} catch {
-		return null;
+	} catch (e) {
+		throw new Error(e);
 	}
 };

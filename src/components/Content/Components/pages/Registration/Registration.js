@@ -2,11 +2,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { yupSchema } from '../../../../../yup/yup';
 import { Button, ErrorMessage, H2, Input } from '../../../../components';
 import { useForm } from 'react-hook-form';
-import { server } from '../../../../../BFF/index';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useRequestServer, useResetAuth } from '../../../../../hooks';
+import { useRequestServer } from '../../../../../hooks';
 import { setUser } from '../../../../../store';
 import styled from 'styled-components';
 
@@ -31,7 +30,6 @@ export const RegistrationContainer = ({ className }) => {
 
 	const {
 		register,
-		reset,
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
@@ -42,8 +40,6 @@ export const RegistrationContainer = ({ className }) => {
 		},
 		resolver: yupResolver(yupSchema.registration),
 	});
-
-	useResetAuth(reset);
 
 	const errorMessage =
 		errors.login?.message ||

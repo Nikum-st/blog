@@ -33,7 +33,7 @@ export const UsersContainer = ({ className }) => {
 				setRoles(rolesResult?.res);
 				dispatch(setUsers(userResult?.res));
 			} catch (e) {
-				console.log(e);
+				console.error(e);
 			} finally {
 				dispatch(loading(false));
 			}

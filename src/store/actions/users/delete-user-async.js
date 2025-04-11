@@ -8,7 +8,7 @@ export const deletUserAsync = (serverRequest, userId) => async (dispatch) => {
 		dispatch(deleteUser(userId));
 		return result;
 	} catch (e) {
-		console.log(e);
+		console.error(e);
 	} finally {
 		dispatch(loading(false));
 	}

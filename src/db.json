@@ -105,11 +105,19 @@
       "image_url": "https://fastly.picsum.photos/id/233/280/150.jpg?hmac=jPiblLxj22aCZjyBtpw1du-g7XPMfaiEJUtLxri3JoE"
     }
   ],
-  "comments": [],
+  "comments": [
+    {
+      "id": "57d2",
+      "publised_at": "11.04.2025, 20:53",
+      "author_id": "cbd3",
+      "post_id": "005",
+      "content": "sdfdsdfs"
+    }
+  ],
   "sessions": [
     {
-      "id": "d621",
-      "hash": "0.65347775812273622975112630228977650403976440429688",
+      "id": "9989",
+      "hash": "0.40425359735821597695348827983252704143524169921875",
       "user": {
         "id": "cbd3",
         "login": "Nikum_st",

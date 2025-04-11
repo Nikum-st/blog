@@ -11,6 +11,6 @@ export const fetchSession = async (hash) => {
 		}
 		return session;
 	} catch (error) {
-		return error;
+		throw new Error(error);
 	}
 };

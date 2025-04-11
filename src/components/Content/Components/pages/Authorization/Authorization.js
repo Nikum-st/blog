@@ -5,10 +5,9 @@ import { useState } from 'react';
 import { Button, ErrorMessage, H2, Input } from '../../../../components';
 import { Link, useNavigate } from 'react-router-dom';
 import { yupSchema } from '../../../../../yup/yup';
-import { server } from '../../../../../BFF/index';
 import { setUser } from '../../../../../store';
 import { useDispatch } from 'react-redux';
-import { useRequestServer, useResetAuth } from '../../../../../hooks';
+import { useRequestServer } from '../../../../../hooks';
 
 const LinkStiled = styled(Link)`
 	margin: 17px;
@@ -29,7 +28,6 @@ const AuthorizationContainer = ({ className }) => {
 
 	const {
 		register,
-		reset,
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
@@ -39,8 +37,6 @@ const AuthorizationContainer = ({ className }) => {
 		},
 		resolver: yupResolver(yupSchema.authorization),
 	});
-
-	useResetAuth(reset);
 
 	const onSubmit = async ({ login, password }) => {
 		await serverRequest('authorization', login, password).then(({ error, res }) => {

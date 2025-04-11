@@ -8,6 +8,6 @@ export const fetchUser = async (loginToFind) => {
 		}
 		return users.find(({ login }) => login === loginToFind);
 	} catch (error) {
-		return error;
+		throw new Error(error);
 	}
 };
