@@ -6,3 +6,4 @@ export { Button } from './Button/Button';
 export { Login } from './Login/Login';
 export { Loader } from './Loader/Loader';
 export { Wrapper } from './Wrapper/Wrapper';
+export { Modal } from './Modal/Modal';

@@ -6,6 +6,7 @@ export const setPostAsync = (serverRequest, postId) => async (dispatch) => {
 		dispatch(loading(true));
 
 		const post = await serverRequest('fetchPost', postId);
+
 		dispatch(setPost(post));
 		return post;
 	} catch (e) {

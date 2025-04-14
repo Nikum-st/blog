@@ -4,4 +4,8 @@ export * from './user/selectSession';
 export * from './user/selectId';
 export * from './users/select-users';
 export * from './app/selectLoading';
+export * from './app/select-is-open-modal';
+export * from './app/select-on-confirm';
+export * from './app/select-text-modal';
 export * from './post/selectPost';
+export * from './posts/select-posts';

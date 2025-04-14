@@ -6,6 +6,6 @@ export const deleteCommentAsync = (serverRequest, id) => async (dispatch) => {
 
 		dispatch(deleteComment(id));
 	} catch (e) {
-		console.error(`Сбой при добавлении коментария на сервер:`, e);
+		console.error(`Сбой при удалении коментария на сервер:`, e);
 	}
 };

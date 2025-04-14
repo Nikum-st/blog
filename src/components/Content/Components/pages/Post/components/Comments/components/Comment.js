@@ -4,23 +4,34 @@ import { Icon } from '../../../../../../../components';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	deleteCommentAsync,
+	modalOpen,
 	selectLogin,
 	selectRole,
+	CLOSE_MODAL,
 } from '../../../../../../../../store';
 import { useRequestServer } from '../../../../../../../../hooks';
 import { ROLE } from '../../../../../../../../constants';
 
 const CommentContainer = ({ className, id, author, content, publisedAt }) => {
 	const login = useSelector(selectLogin);
+	const role = useSelector(selectRole);
 	const serverRequest = useRequestServer();
 	const dispatch = useDispatch();
-	const role = useSelector(selectRole);
 
 	const accessDelete = [ROLE.ADMIN, ROLE.MODERATOR];
 
 	const handleDeleteComment = (id) => {
-		dispatch(deleteCommentAsync(serverRequest, id));
+		dispatch(
+			modalOpen({
+				text: 'Удалить коментарий?',
+				onConfirm: () => {
+					dispatch(deleteCommentAsync(serverRequest, id));
+					dispatch(CLOSE_MODAL);
+				},
+			}),
+		);
 	};
+
 	return (
 		<div className={className} key={id} id={id}>
 			<div className="comment">

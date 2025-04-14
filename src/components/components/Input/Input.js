@@ -6,7 +6,7 @@ const InputContainer = ({ className, ...props }) => (
 
 export const Input = styled(InputContainer)`
     height: 32px;
-    width: 100%;
+   width: ${({ width = '100%' }) => width};
     margin-bottom: 11px;
     padding: 10px;
     font-size: 14px;

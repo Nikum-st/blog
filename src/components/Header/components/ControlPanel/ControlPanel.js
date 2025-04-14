@@ -17,6 +17,8 @@ const ControlPanelContainer = ({ className }) => {
 	const roleId = useSelector(selectRole);
 	const login = useSelector(selectLogin);
 
+	const roleAllowed = [ROLE.ADMIN, ROLE.MODERATOR];
+
 	return roleId === ROLE.GUEST ? (
 		<Container>
 			<Link to="/login">
@@ -31,32 +33,34 @@ const ControlPanelContainer = ({ className }) => {
 				</Login>
 				<OutLog />
 			</Container>
-			<Container>
-				<div onClick={() => navigate(-1)}>
-					<Icon
-						id={'fa-backward'}
-						margin="4px 10px 0px 6px"
-						size={'20px'}
-						cursor={'pointer'}
-					/>
-				</div>
-				<Link to="/post">
-					<Icon
-						id={'fa-file-text-o'}
-						margin="4px 10px 0px 6px"
-						size={'20px'}
-						cursor={'pointer'}
-					/>
-				</Link>
-				<Link to="/users">
-					<Icon
-						id={'fa-users'}
-						margin="4px 10px 0px 6px"
-						size={'20px'}
-						cursor={'pointer'}
-					/>
-				</Link>
-			</Container>
+			{roleAllowed.includes(roleId) && (
+				<Container>
+					<div onClick={() => navigate(-1)}>
+						<Icon
+							id={'fa-backward'}
+							margin="4px 10px 0px 6px"
+							size={'20px'}
+							cursor={'pointer'}
+						/>
+					</div>
+					<Link to="/post">
+						<Icon
+							id={'fa-file-text-o'}
+							margin="4px 10px 0px 6px"
+							size={'20px'}
+							cursor={'pointer'}
+						/>
+					</Link>
+					<Link to="/users">
+						<Icon
+							id={'fa-users'}
+							margin="4px 10px 0px 6px"
+							size={'20px'}
+							cursor={'pointer'}
+						/>
+					</Link>
+				</Container>
+			)}
 		</div>
 	);
 };

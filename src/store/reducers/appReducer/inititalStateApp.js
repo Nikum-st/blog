@@ -1,4 +1,8 @@
 export const initialStateApp = {
-	wasLogout: false,
 	loading: false,
+	modal: {
+		isOpen: false,
+		text: '',
+		onConfirm: () => {},
+	},
 };

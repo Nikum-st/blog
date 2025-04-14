@@ -1,45 +1,26 @@
 import styled from 'styled-components';
-import { H2, Icon } from '../../../../../../components';
-import { useSelector } from 'react-redux';
-import { selectRole } from '../../../../../../../store';
-import { ROLE } from '../../../../../../../constants';
+import { H2 } from '../../../../../../components';
+import { SpecialPanel } from '../SpecialPanel/SpecialPanel';
+import { useNavigate } from 'react-router-dom';
 
 const PostContentConatiner = ({ className, post }) => {
-	const role = useSelector(selectRole);
+	const navigate = useNavigate();
 
-	const access = [ROLE.ADMIN, ROLE.MODERATOR];
+	const editMode = () => {
+		navigate(`/post/${post.id}/edit`);
+	};
+
 	return (
 		<div className={className}>
 			<img src={post.imageUrl} alt={post.id} />
 			<H2 textAlign="left">{post.title}</H2>
-			<div className="special-panel">
-				<div className="published-at">
-					<Icon
-						id="fa-calendar-o"
-						margin="0 7px 0 0"
-						size="24px"
-						onClick={() => {}}
-					/>
-					{post.publisedAt}
-				</div>
-				{access.includes(role) && (
-					<div className="buttons">
-						<Icon
-							id="fa-pencil-square-o"
-							cursor="pointer"
-							size="24px"
-							margin="0 20px 0 0"
-							onClick={() => {}}
-						/>
-						<Icon
-							cursor="pointer"
-							id="fa-trash-o"
-							size="24px"
-							onClick={() => {}}
-						/>
-					</div>
-				)}
-			</div>
+
+			<SpecialPanel
+				publisedAt={post.publisedAt}
+				id={post.id}
+				editButton={true}
+				onClick={editMode}
+			/>
 			<div className="post-text">{post.content}</div>
 		</div>
 	);
@@ -51,18 +32,6 @@ export const PostContent = styled(PostContentConatiner)`
 		float: left;
 		margin: 0 57px 10px 0;
 	}
-	& .special-panel {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin: -9px 0 20px;
-	}
-
-	& .published-at {
-		display: flex;
-		align-items: center;
-		font-size: 18px;
-	}
 
 	& i {
 		position: relative;
@@ -71,8 +40,5 @@ export const PostContent = styled(PostContentConatiner)`
 	& .post-text {
 		text-align: justify;
 		font-size: 20px;
-	}
-	& .buttons {
-		display: flex;
 	}
 `;

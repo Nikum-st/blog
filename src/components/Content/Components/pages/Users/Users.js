@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { TableHeader } from './components/TableHeader';
 import { UserRaw } from './components/UserRaw';
 import { useEffect, useState } from 'react';
-import { loading, selectUsers, setUsers } from '../../../../../store';
+import { loading, selectIdUser, selectUsers, setUsers } from '../../../../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRequestServer } from '../../../../../hooks/use-request-server';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +15,7 @@ export const UsersContainer = ({ className }) => {
 	const serverRequest = useRequestServer();
 	const navigate = useNavigate();
 	const users = useSelector(selectUsers);
+	const userId = useSelector(selectIdUser);
 
 	useEffect(() => {
 		const getRoles = async () => {
@@ -46,16 +47,18 @@ export const UsersContainer = ({ className }) => {
 			<div className={className}>
 				<H2>Пользователи</H2>
 				<TableHeader />
-				{users?.map(({ id, login, registredAt, roleId }) => (
-					<UserRaw
-						id={id}
-						key={id}
-						login={login}
-						registredAt={registredAt}
-						roleId={roleId}
-						roles={roles}
-					/>
-				))}
+				{users
+					?.filter(({ id }) => id !== userId)
+					?.map(({ id, login, registredAt, roleId }) => (
+						<UserRaw
+							id={id}
+							key={id}
+							login={login}
+							registredAt={registredAt}
+							roleId={roleId}
+							roles={roles}
+						/>
+					))}
 			</div>
 		</Wrapper>
 	);

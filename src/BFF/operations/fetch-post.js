@@ -24,7 +24,7 @@ export const fetchPost = async (postId) => {
 		});
 
 		return {
-			id: post,
+			id: post.id,
 			publisedAt: post.publised_at,
 			imageUrl: post.image_url,
 			title: post.title,
