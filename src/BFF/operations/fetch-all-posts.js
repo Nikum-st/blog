@@ -5,7 +5,6 @@ import { getCommentsCount } from '../utils/get-comments-count';
 export const fetchAllPosts = async (page, limit) => {
 	try {
 		const comments = await getData('comments');
-
 		const { posts, lastPage } = await getPosts(page, limit);
 
 		return {

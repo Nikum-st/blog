@@ -25,7 +25,6 @@ const PaginationContainer = ({ className, page, setPage, lastPage }) => {
 				disabled={page === lastPage}
 				onClick={() => {
 					setPage(page + 1);
-					console.log(page);
 				}}
 			>
 				Следующая

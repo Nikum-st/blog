@@ -15,3 +15,4 @@ export * from './add-comment';
 export * from './delete-comment';
 export * from './delete-post';
 export * from './fetch-all-posts';
+export * from './fetch-search';

@@ -1,4 +1,4 @@
-import { ACTION_TYPE } from '../../../constants';
+import { setPosts } from './set-posts';
 
 export const setPostsAsync =
 	(serverRequest, page, PAGINATION_LIMIT) => async (dispatch) => {
@@ -8,10 +8,7 @@ export const setPostsAsync =
 				page,
 				PAGINATION_LIMIT,
 			);
-			dispatch({
-				type: ACTION_TYPE.POSTS.SET_POSTS,
-				payload: posts,
-			});
+			dispatch(setPosts(posts));
 			return lastPage;
 		} catch (e) {
 			console.error(e);

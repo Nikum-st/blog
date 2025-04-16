@@ -12,3 +12,4 @@ export * from './post/update-post';
 export * from './post/update-post-async';
 export * from './posts/delete-post-async';
 export * from './posts/set-posts-async';
+export * from './posts/set-posts-search-async';
