@@ -7,7 +7,7 @@ export const postsReducer = (state = initialStatePosts, action) => {
 
 	switch (type) {
 		case ACTION_TYPE.POSTS.SET_POSTS:
-			return [...state, ...payload];
+			return [...payload];
 		case ACTION_TYPE.POSTS.DELETE_POST:
 			return state.filter((post) => post.id !== payload);
 		default:

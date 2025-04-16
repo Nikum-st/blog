@@ -4,7 +4,7 @@ export const fetchPost = async (postId) => {
 	try {
 		const [post, comments, users] = await Promise.all([
 			getData(`posts/${postId}`),
-			getData(`comments?post_id[${postId}]`),
+			getData(`comments?post_id=${postId}`),
 			getData(`users`),
 		]);
 

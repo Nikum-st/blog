@@ -121,11 +121,32 @@
   ],
   "comments": [
     {
-      "id": "7448",
-      "publised_at": "13.04.2025, 13:04",
+      "id": "b8cc",
+      "publised_at": "14.04.2025, 21:05",
       "author_id": "cbd3",
-      "post_id": "005",
-      "content": "fdgfdgfg"
+      "post_id": "001",
+      "content": "asdasd"
+    },
+    {
+      "id": "b50e",
+      "publised_at": "14.04.2025, 21:10",
+      "author_id": "cbd3",
+      "post_id": "001",
+      "content": "dsfsdsdfsd"
+    },
+    {
+      "id": "0561",
+      "publised_at": "14.04.2025, 21:10",
+      "author_id": "cbd3",
+      "post_id": "001",
+      "content": "sdfsdfdsf"
+    },
+    {
+      "id": "8cc0",
+      "publised_at": "14.04.2025, 21:13",
+      "author_id": "cbd3",
+      "post_id": "001",
+      "content": "sadasdsad"
     }
   ],
   "sessions": [

@@ -13,7 +13,7 @@ export const Button = styled(ButtonContainer)`
 	background: #dbd8d8;
 	width: ${({ width = '10px' }) => width};
 	margin-right: 4px;
-	cursor: pointer;
+	cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
 	padding: 2px;
 	height: auto;
 `;
