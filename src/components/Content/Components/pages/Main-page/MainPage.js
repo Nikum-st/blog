@@ -9,6 +9,7 @@ import { PostCard } from './components/PostCard';
 import { Pagination } from './components/Pagination';
 import { Search } from './components/Search';
 import { PAGINATION_LIMIT } from '../../../../../constants';
+import { ErrorMessage } from '../../../../components';
 
 const MainPageContainer = ({ className }) => {
 	const dispatch = useDispatch();
@@ -35,6 +36,9 @@ const MainPageContainer = ({ className }) => {
 	// const debounceRequest = useMemo(() => debounce(setShouldSearch, 2000), []);
 
 	const onSearch = ({ target }) => {
+		if (target.value.length === 0) {
+			setSendSearchMode(false);
+		}
 		setSearchValue(target.value);
 	};
 
@@ -68,6 +72,7 @@ const MainPageContainer = ({ className }) => {
 			{sendSearchMode === false && (
 				<Pagination page={page} lastPage={lastPage} setPage={setPage} />
 			)}
+			{!posts.length && <ErrorMessage>Статьи не найдены</ErrorMessage>}
 		</Wrapper>
 	);
 };
