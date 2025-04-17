@@ -11,6 +11,7 @@ export const setPostAsync = (serverRequest, postId) => async (dispatch) => {
 		return post;
 	} catch (e) {
 		console.error('Ошибка с запроса на сервер post:', e);
+		throw e;
 	} finally {
 		dispatch(loading(false));
 	}

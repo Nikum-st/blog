@@ -94,7 +94,6 @@ export const UserRaw = styled(UserRawContainer)`
 	}
 
 	& .date-registration {
-		width: 120px;
 		text-align: center;
 	}
 	& .icons {

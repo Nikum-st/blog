@@ -7,6 +7,7 @@ import { loading, selectIdUser, selectUsers, setUsers } from '../../../../../sto
 import { useDispatch, useSelector } from 'react-redux';
 import { useRequestServer } from '../../../../../hooks/use-request-server';
 import { useNavigate } from 'react-router-dom';
+import { ROLE } from '../../../../../constants';
 
 export const UsersContainer = ({ className }) => {
 	const [roles, setRoles] = useState([]);
@@ -43,7 +44,7 @@ export const UsersContainer = ({ className }) => {
 	}, [dispatch, serverRequest, navigate]);
 
 	return (
-		<Wrapper error={error}>
+		<Wrapper error={error} access={[ROLE.ADMIN]}>
 			<div className={className}>
 				<H2>Пользователи</H2>
 				<TableHeader />

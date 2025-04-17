@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useRequestServer } from '../../../../../hooks';
 import styled from 'styled-components';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { selectPosts, setPostsAsync, setPostsSearchAsync } from '../../../../../store';
 import { Wrapper } from '../../../../components/Wrapper/Wrapper';
 import { PostCard } from './components/PostCard';
@@ -72,7 +72,9 @@ const MainPageContainer = ({ className }) => {
 			{sendSearchMode === false && (
 				<Pagination page={page} lastPage={lastPage} setPage={setPage} />
 			)}
-			{!posts.length && <ErrorMessage>Статьи не найдены</ErrorMessage>}
+			{!posts.length && sendSearchMode && (
+				<ErrorMessage>Статьи не найдены</ErrorMessage>
+			)}
 		</Wrapper>
 	);
 };

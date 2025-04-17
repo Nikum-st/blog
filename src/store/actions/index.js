@@ -10,6 +10,7 @@ export * from './post/add-comment-async';
 export * from './post/delete-comment-async';
 export * from './post/update-post';
 export * from './post/update-post-async';
+export * from './post/CLEAR-POST';
 export * from './posts/delete-post-async';
 export * from './posts/set-posts-async';
 export * from './posts/set-posts-search-async';

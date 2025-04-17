@@ -17,7 +17,7 @@ const ControlPanelContainer = ({ className }) => {
 	const roleId = useSelector(selectRole);
 	const login = useSelector(selectLogin);
 
-	const roleAllowed = [ROLE.ADMIN, ROLE.MODERATOR];
+	const roleAllowed = [ROLE.ADMIN];
 
 	return roleId === ROLE.GUEST ? (
 		<Container>

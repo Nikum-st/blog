@@ -1,15 +1,14 @@
 export const getData = async (endpoint) => {
-	try {
-		const response = await fetch(`http://localhost:3005/${endpoint}`);
-		if (!response.ok) {
-			throw new Error(`Ошибка сервера: ${response.status}`);
-		}
+	const response = await fetch(`http://localhost:3005/${endpoint}`);
 
-		const result = await response.json();
+	if (!response.ok) {
+		const error =
+			response.status === 404
+				? 'Такой страницы не существует'
+				: `Ошибка сервера: ${response.status}`;
 
-		return result;
-	} catch (error) {
-		console.error(`Невозможно получить данные с сервера: ${error}`);
 		throw error;
 	}
+
+	return await response.json();
 };

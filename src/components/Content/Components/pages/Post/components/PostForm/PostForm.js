@@ -6,42 +6,37 @@ import {
 	selectRole,
 	setPostAsync,
 	savePostAsync,
+	CLEAR_POST,
+	modalOpen,
 } from '../../../../../../../store';
-import { ACTION_TYPE, ROLE } from '../../../../../../../constants';
 import { useEffect, useRef, useState } from 'react';
 import { SpecialPanel } from '../SpecialPanel/SpecialPanel';
 import { sanitizeContent } from './utils/sanitize-content';
-import { modalOpen } from '../../../../../../../store/actions/app/modal-open';
 import { useRequestServer } from '../../../../../../../hooks';
 import { useNavigate } from 'react-router-dom';
+import { ROLE } from '../../../../../../../constants';
 
 const PostFormContainer = ({ className, post, isCreating }) => {
-	const [errorFromServer, setErrorFromServer] = useState('');
-	const [error, setError] = useState('');
+	const [error, setError] = useState(null);
+	const [errorInput, setErrorInput] = useState(null);
 	const role = useSelector(selectRole);
 	const dispatch = useDispatch();
 	const serverRequest = useRequestServer();
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		const access = [ROLE.ADMIN, ROLE.MODERATOR];
-		if (!access.includes(role)) {
-			setErrorFromServer('Доступ запрещен!');
-		}
-		if (!post && !isCreating) {
-			dispatch(setPostAsync(serverRequest, post.id));
-		}
-		if (isCreating) {
-			dispatch({ type: ACTION_TYPE.POST.CLEAR_POST });
+	const contentRef = useRef(null);
+	const imageRef = useRef(null);
+	const titleRef = useRef(null);
 
+	useEffect(() => {
+		if (!post && !isCreating) {
+			dispatch(setPostAsync(serverRequest, post.id)).catch((e) => setError(e));
+		} else if (isCreating) {
+			dispatch(CLEAR_POST);
 			if (imageRef.current) imageRef.current.value = '';
 			if (titleRef.current) titleRef.current.value = '';
 		}
 	}, [role, dispatch, post, serverRequest, isCreating]);
-
-	const contentRef = useRef(null);
-	const imageRef = useRef(null);
-	const titleRef = useRef(null);
 
 	const saveNewData = () => {
 		const editData = {
@@ -51,7 +46,7 @@ const PostFormContainer = ({ className, post, isCreating }) => {
 		};
 
 		if (!editData.newContent || !editData.newImage || !editData.newTitle) {
-			setError('Все поля должны быть заполнены');
+			setErrorInput('Все поля должны быть заполнены');
 			return;
 		}
 
@@ -70,15 +65,15 @@ const PostFormContainer = ({ className, post, isCreating }) => {
 	};
 
 	return (
-		<Wrapper error={errorFromServer}>
-			{error && <ErrorMessage>{error}</ErrorMessage>}
+		<Wrapper error={error} access={[ROLE.ADMIN]}>
+			{errorInput && <ErrorMessage>{errorInput}</ErrorMessage>}
 			<div className={className}>
 				<Input
 					ref={imageRef}
 					defaultValue={post?.imageUrl}
 					width="90%"
 					placeholder="Изображение..."
-					onChange={() => setError('')}
+					onChange={() => setErrorInput(null)}
 				/>
 				<Input
 					maxLength="100"
@@ -86,7 +81,7 @@ const PostFormContainer = ({ className, post, isCreating }) => {
 					defaultValue={post?.title}
 					width="90%"
 					placeholder="Заголовок..."
-					onChange={() => setError('')}
+					onChange={() => setErrorInput(null)}
 				/>
 				{isCreating ? (
 					<Icon

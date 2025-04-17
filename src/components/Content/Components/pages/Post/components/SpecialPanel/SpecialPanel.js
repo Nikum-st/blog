@@ -12,7 +12,7 @@ const SpecialPanelContainer = ({ className, id, publisedAt, editButton, onClick 
 	const serverRequest = useRequestServer();
 	const navigate = useNavigate();
 	const role = useSelector(selectRole);
-	const access = [ROLE.ADMIN, ROLE.MODERATOR];
+	const access = [ROLE.ADMIN];
 
 	const deletePost = (id) => {
 		dispatch(
