@@ -30,7 +30,9 @@ const PostFormContainer = ({ className, post, isCreating }) => {
 
 	useEffect(() => {
 		if (!post && !isCreating) {
-			dispatch(setPostAsync(serverRequest, post.id)).catch((e) => setError(e));
+			dispatch(setPostAsync(serverRequest, post.id)).catch(() =>
+				setError(`Нет связи с сервером. Попробуйте позже`),
+			);
 		} else if (isCreating) {
 			dispatch(CLEAR_POST);
 			if (imageRef.current) imageRef.current.value = '';

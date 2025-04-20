@@ -12,6 +12,7 @@ import { PAGINATION_LIMIT } from '../../../../../constants';
 import { ErrorMessage } from '../../../../components';
 
 const MainPageContainer = ({ className }) => {
+	const [errorServer, setErrorServer] = useState(null);
 	const dispatch = useDispatch();
 	const serverRequest = useRequestServer();
 	const posts = useSelector(selectPosts);
@@ -23,10 +24,14 @@ const MainPageContainer = ({ className }) => {
 	useEffect(() => {
 		if (!searchValue) {
 			const fetchPosts = async () => {
-				const last = await dispatch(
-					setPostsAsync(serverRequest, page, PAGINATION_LIMIT),
-				);
-				setLastPage(last);
+				try {
+					const last = await dispatch(
+						setPostsAsync(serverRequest, page, PAGINATION_LIMIT),
+					);
+					setLastPage(last);
+				} catch (e) {
+					setErrorServer(`Нет связи с сервером. Попробуйте позже`, e);
+				}
 			};
 
 			fetchPosts();
@@ -51,7 +56,7 @@ const MainPageContainer = ({ className }) => {
 	};
 
 	return (
-		<Wrapper>
+		<Wrapper error={errorServer}>
 			<Search
 				searchValue={searchValue}
 				onSearch={onSearch}

@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { Button, ErrorMessage, H2, Input } from '../../../../components';
+import { Button, ErrorMessage, H2, Input, Wrapper } from '../../../../components';
 import { Link, useNavigate } from 'react-router-dom';
 import { yupSchema } from '../../../../../yup/yup';
-import { setUser } from '../../../../../store';
+import { loading, setUser } from '../../../../../store';
 import { useDispatch } from 'react-redux';
 import { useRequestServer } from '../../../../../hooks';
 
@@ -39,47 +39,60 @@ const AuthorizationContainer = ({ className }) => {
 	});
 
 	const onSubmit = async ({ login, password }) => {
-		await serverRequest('authorization', login, password).then(({ error, res }) => {
-			if (error) {
-				setErrorServer(error);
+		dispatch(loading(true));
+		await serverRequest('authorization', login, password)
+			.then(({ error, res }) => {
+				if (error) {
+					setErrorServer(error);
+					return;
+				}
+				dispatch(setUser(res));
+				sessionStorage.setItem('user', JSON.stringify(res));
+				navigate('/');
+			})
+			.catch(() => {
+				setErrorServer('Нет связи с сервером. Попробуйте позже');
 				return;
-			}
-			dispatch(setUser(res));
-			sessionStorage.setItem('user', JSON.stringify(res));
-			navigate('/');
-		});
+			})
+			.finally(() => {
+				dispatch(loading(false));
+			});
 	};
+
 	const errorMessage = errors.login?.message || errors.password?.message || errorServer;
 
 	return (
-		<div className={className}>
-			<H2>Авторизация</H2>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<Input
-					type="text"
-					placeholder="Логин..."
-					{...register(`login`, {
-						onChange: () => {
-							setErrorServer(null);
-						},
-					})}
-				/>
-				<Input
-					type="text"
-					placeholder="Пароль..."
-					{...register(`password`, {
-						onChange: () => {
-							setErrorServer(null);
-						},
-					})}
-				/>
-				<Button type="submit" width="100%" disabled={!!errorServer}>
-					Авторизоваться
-				</Button>
-			</form>
-			{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-			<LinkStiled to="/register">Регистрация</LinkStiled>
-		</div>
+		<Wrapper>
+			{' '}
+			<div className={className}>
+				<H2>Авторизация</H2>
+				<form onSubmit={handleSubmit(onSubmit)}>
+					<Input
+						type="text"
+						placeholder="Логин..."
+						{...register(`login`, {
+							onChange: () => {
+								setErrorServer(null);
+							},
+						})}
+					/>
+					<Input
+						type="text"
+						placeholder="Пароль..."
+						{...register(`password`, {
+							onChange: () => {
+								setErrorServer(null);
+							},
+						})}
+					/>
+					<Button type="submit" width="100%" disabled={!!errorServer}>
+						Авторизоваться
+					</Button>
+				</form>
+				{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+				<LinkStiled to="/register">Регистрация</LinkStiled>
+			</div>
+		</Wrapper>
 	);
 };
 

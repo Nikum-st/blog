@@ -1,8 +1,10 @@
+import { loading } from '../app/loading';
 import { setPosts } from './set-posts';
 
 export const setPostsAsync =
 	(serverRequest, page, PAGINATION_LIMIT) => async (dispatch) => {
 		try {
+			dispatch(loading(true));
 			const { posts, lastPage } = await serverRequest(
 				'fetchAllPosts',
 				page,
@@ -12,5 +14,8 @@ export const setPostsAsync =
 			return lastPage;
 		} catch (e) {
 			console.error(e);
+			throw e;
+		} finally {
+			dispatch(loading(false));
 		}
 	};

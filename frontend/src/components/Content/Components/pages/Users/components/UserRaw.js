@@ -30,9 +30,9 @@ const UserRawContainer = ({ className, id, login, registredAt, roleId, roles, ke
 	};
 
 	const deleteUser = async (userId) => {
-		const { error, res } = await dispatch(deletUserAsync(serverRequest, userId));
-		if (error) {
-			setError(error);
+		const result = await dispatch(deletUserAsync(serverRequest, userId));
+		if (result.error) {
+			setError(result.error);
 		}
 	};
 	return (

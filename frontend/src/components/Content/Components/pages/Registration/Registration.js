@@ -1,12 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { yupSchema } from '../../../../../yup/yup';
-import { Button, ErrorMessage, H2, Input } from '../../../../components';
+import { Button, ErrorMessage, H2, Input, Wrapper } from '../../../../components';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useRequestServer } from '../../../../../hooks';
-import { setUser } from '../../../../../store';
+import { loading, setUser } from '../../../../../store';
 import styled from 'styled-components';
 
 export const RegistrationContainer = ({ className }) => {
@@ -17,15 +17,23 @@ export const RegistrationContainer = ({ className }) => {
 	const dispatch = useDispatch();
 
 	const onSubmit = async ({ login, password }) => {
-		await serverRequest('registration', login, password).then(({ error, res }) => {
-			if (error) {
-				setErrorServer(error);
-				return;
-			}
-			dispatch(setUser(res));
-			sessionStorage.setItem('user', JSON.stringify(res));
-			navigate('/');
-		});
+		dispatch(loading(true));
+		await serverRequest('registration', login, password)
+			.then(({ error, res }) => {
+				if (error) {
+					setErrorServer(error);
+					return;
+				}
+				dispatch(setUser(res));
+				sessionStorage.setItem('user', JSON.stringify(res));
+				navigate('/');
+			})
+			.catch(() => {
+				setErrorServer('Нет связи с сервером. Попробуйте позже');
+			})
+			.finally(() => {
+				dispatch(loading(false));
+			});
 	};
 
 	const {
@@ -48,42 +56,44 @@ export const RegistrationContainer = ({ className }) => {
 		errorServer;
 
 	return (
-		<div className={className}>
-			<H2>Регистрация</H2>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<Input
-					type="text"
-					placeholder="Логин..."
-					{...register(`login`, {
-						onChange: () => {
-							setErrorServer(null);
-						},
-					})}
-				/>
-				<Input
-					type="text"
-					placeholder="Пароль..."
-					{...register(`password`, {
-						onChange: () => {
-							setErrorServer(null);
-						},
-					})}
-				/>
-				<Input
-					type="text"
-					placeholder="Повторите пароль..."
-					{...register(`passcheck`, {
-						onChange: () => {
-							setErrorServer(null);
-						},
-					})}
-				/>
-				<Button type="submit" width="100%" disabled={!!errorServer}>
-					Зарегестрироваться
-				</Button>
-			</form>
-			{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-		</div>
+		<Wrapper>
+			<div className={className}>
+				<H2>Регистрация</H2>
+				<form onSubmit={handleSubmit(onSubmit)}>
+					<Input
+						type="text"
+						placeholder="Логин..."
+						{...register(`login`, {
+							onChange: () => {
+								setErrorServer(null);
+							},
+						})}
+					/>
+					<Input
+						type="text"
+						placeholder="Пароль..."
+						{...register(`password`, {
+							onChange: () => {
+								setErrorServer(null);
+							},
+						})}
+					/>
+					<Input
+						type="text"
+						placeholder="Повторите пароль..."
+						{...register(`passcheck`, {
+							onChange: () => {
+								setErrorServer(null);
+							},
+						})}
+					/>
+					<Button type="submit" width="100%" disabled={!!errorServer}>
+						Зарегестрироваться
+					</Button>
+				</form>
+				{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+			</div>
+		</Wrapper>
 	);
 };
 

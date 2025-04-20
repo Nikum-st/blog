@@ -7,7 +7,6 @@ import { useParams, useMatch } from 'react-router-dom';
 import { useRequestServer } from '../../../../../hooks';
 import { selectPost, selectRole, setPostAsync } from '../../../../../store';
 import { PostForm } from './components/PostForm/PostForm';
-import { ROLE } from '../../../../../constants';
 
 const PostContainer = ({ className }) => {
 	const [error, setError] = useState(null);
@@ -21,7 +20,9 @@ const PostContainer = ({ className }) => {
 
 	useEffect(() => {
 		if (!isCreating) {
-			dispatch(setPostAsync(serverRequest, params.id)).catch((e) => setError(e));
+			dispatch(setPostAsync(serverRequest, params.id)).catch(() =>
+				setError(`Нет связи с сервером. Попробуйте позже`),
+			);
 		}
 	}, [dispatch, serverRequest, params.id, isCreating, isEditing, role]);
 
