@@ -1,36 +1,33 @@
 import styled from 'styled-components';
 import { ErrorMessage, Icon } from '../../../../../components';
 import { useState } from 'react';
-import { useRequestServer } from '../../../../../../hooks/use-request-server';
 import { ROLE } from '../../../../../../constants';
 import { useDispatch } from 'react-redux';
 import { deletUserAsync } from '../../../../../../store';
+import { request } from '../../../../../../utils/request-server';
 
 const UserRawContainer = ({ className, id, login, registredAt, roleId, roles, key }) => {
 	const [selectedRole, setSelectedRole] = useState(roleId);
 	const [error, setError] = useState(null);
 	const [savedRole, setSavedRole] = useState(null);
-	const serverRequest = useRequestServer();
 	const dispatch = useDispatch();
 
 	const handleChangeRole = ({ target }) => {
 		setSelectedRole(target.value);
 	};
 	const saveRoleForUser = async (selectedRole, userId) => {
-		const result = await serverRequest(
-			`updateUserRole`,
-			Number(selectedRole),
-			userId,
-		);
+		const result = await request(`/admin/users/${userId}`, 'PATCH', {
+			newRole: Number(selectedRole),
+		});
 		if (result.error) {
 			setError(result.error);
-		} else if (result.res) {
+		} else if (result.data) {
 			setSavedRole(true);
 		}
 	};
 
 	const deleteUser = async (userId) => {
-		const result = await dispatch(deletUserAsync(serverRequest, userId));
+		const result = await dispatch(deletUserAsync(userId));
 		if (result.error) {
 			setError(result.error);
 		}

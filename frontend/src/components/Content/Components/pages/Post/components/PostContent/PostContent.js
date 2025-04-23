@@ -16,7 +16,7 @@ const PostContentConatiner = ({ className, post }) => {
 			<H2 textAlign="left">{post.title}</H2>
 
 			<SpecialPanel
-				publisedAt={post.publisedAt}
+				publishedAt={post.publishedAt}
 				id={post.id}
 				editButton={true}
 				onClick={editMode}
@@ -40,5 +40,6 @@ export const PostContent = styled(PostContentConatiner)`
 	& .post-text {
 		text-align: justify;
 		font-size: 20px;
+		white-space: break-spaces;
 	}
 `;

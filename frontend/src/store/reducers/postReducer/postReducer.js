@@ -8,7 +8,6 @@ export const postReducer = (state = initialStatePost, action) => {
 	switch (type) {
 		case ACTION_TYPE.POST.SET_POST:
 			return {
-				...state,
 				...payload,
 			};
 		case ACTION_TYPE.POST.ADD_COMMENT:

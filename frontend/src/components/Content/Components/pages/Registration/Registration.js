@@ -5,27 +5,26 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useRequestServer } from '../../../../../hooks';
 import { loading, setUser } from '../../../../../store';
 import styled from 'styled-components';
+import { request } from '../../../../../utils/request-server';
 
 export const RegistrationContainer = ({ className }) => {
 	const [errorServer, setErrorServer] = useState(null);
-	const serverRequest = useRequestServer();
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
 	const onSubmit = async ({ login, password }) => {
 		dispatch(loading(true));
-		await serverRequest('registration', login, password)
-			.then(({ error, res }) => {
+		await request('/user/register', 'POST', { login, password })
+			.then(({ error, data }) => {
 				if (error) {
 					setErrorServer(error);
 					return;
 				}
-				dispatch(setUser(res));
-				sessionStorage.setItem('user', JSON.stringify(res));
+				dispatch(setUser(data));
+				sessionStorage.setItem('user', JSON.stringify(data));
 				navigate('/');
 			})
 			.catch(() => {

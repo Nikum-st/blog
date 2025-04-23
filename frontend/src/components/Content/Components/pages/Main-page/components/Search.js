@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Icon, Input } from '../../../../../components';
 
-const SearchContainer = ({ className, searchValue, onSearch, submitSearch }) => {
+const SearchContainer = ({ className, searchValue, onSearch, setSendSearchMode }) => {
 	return (
 		<div className={className}>
 			<Input
@@ -10,7 +10,7 @@ const SearchContainer = ({ className, searchValue, onSearch, submitSearch }) => 
 				placeholder="Поиск по заголовку..."
 			/>
 			<Icon
-				onClick={submitSearch}
+				onClick={() => setSendSearchMode(true)}
 				cursor="pointer"
 				id="fa-search"
 				margin="0 7px 0 0"

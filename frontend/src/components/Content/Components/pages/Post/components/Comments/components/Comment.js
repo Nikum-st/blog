@@ -6,26 +6,26 @@ import {
 	deleteCommentAsync,
 	modalOpen,
 	selectLogin,
-	selectRole,
+	selectRoleId,
 	CLOSE_MODAL,
+	selectPostId,
 } from '../../../../../../../../store';
-import { useRequestServer } from '../../../../../../../../hooks';
 import { ROLE } from '../../../../../../../../constants';
 
 const CommentContainer = ({ className, id, author, content, publisedAt }) => {
 	const login = useSelector(selectLogin);
-	const role = useSelector(selectRole);
-	const serverRequest = useRequestServer();
+	const role = useSelector(selectRoleId);
+	const postId = useSelector(selectPostId);
 	const dispatch = useDispatch();
 
 	const accessDelete = [ROLE.ADMIN, ROLE.MODERATOR];
 
-	const handleDeleteComment = (id) => {
+	const handleDeleteComment = (id, postId) => {
 		dispatch(
 			modalOpen({
 				text: 'Удалить коментарий?',
 				onConfirm: () => {
-					dispatch(deleteCommentAsync(serverRequest, id));
+					dispatch(deleteCommentAsync(id, postId));
 					dispatch(CLOSE_MODAL);
 				},
 			}),
@@ -62,7 +62,7 @@ const CommentContainer = ({ className, id, author, content, publisedAt }) => {
 					id="fa-trash-o"
 					size="28px"
 					margin="0 0 0 10px"
-					onClick={() => handleDeleteComment(id)}
+					onClick={() => handleDeleteComment(id, postId)}
 					cursor="pointer"
 				/>
 			)}

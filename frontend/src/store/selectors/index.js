@@ -8,4 +8,5 @@ export * from './app/select-is-open-modal';
 export * from './app/select-on-confirm';
 export * from './app/select-text-modal';
 export * from './post/selectPost';
+export * from './post/selectPostId';
 export * from './posts/select-posts';

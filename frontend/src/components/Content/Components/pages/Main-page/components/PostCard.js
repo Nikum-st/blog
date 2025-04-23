@@ -2,14 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Icon } from '../../../../../components/Icon/Icon';
 
-const PostCardContainer = ({
-	className,
-	id,
-	title,
-	publisedAt,
-	imageUrl,
-	commentsCount,
-}) => {
+const PostCardContainer = ({ className, id, title, publishedAt, imageUrl, comments }) => {
 	return (
 		<div className={className}>
 			<Link to={`/post/${id}`}>
@@ -19,11 +12,11 @@ const PostCardContainer = ({
 					<div className="post-card-info">
 						<div className="published-at">
 							<Icon id="fa-calendar-o" margin="0 7px 0 0" size="18px" />
-							{publisedAt}
+							{publishedAt}
 						</div>
 						<div className="comments-count">
 							<Icon id="fa-comment-o" margin="0 7px 0 0" size="18px" />
-							{commentsCount}
+							{comments.length}
 						</div>
 					</div>
 				</div>

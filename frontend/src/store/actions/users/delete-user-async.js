@@ -1,10 +1,11 @@
 import { deleteUser } from './delete-user';
 import { loading } from '../app/loading';
+import { request } from '../../../utils/request-server';
 
-export const deletUserAsync = (serverRequest, userId) => async (dispatch) => {
+export const deletUserAsync = (userId) => async (dispatch) => {
 	try {
 		dispatch(loading(true));
-		const result = await serverRequest('deleteUser', userId);
+		const result = await request(`/admin/users/${userId}`, 'DELETE');
 		dispatch(deleteUser(userId));
 		return result;
 	} catch (e) {

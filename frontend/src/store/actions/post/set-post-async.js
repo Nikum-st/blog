@@ -1,16 +1,21 @@
+import { request } from '../../../utils/request-server';
 import { loading } from '../app/loading';
 import { setPost } from './set-post';
 
-export const setPostAsync = (serverRequest, postId) => async (dispatch) => {
+export const setPostAsync = (postId) => async (dispatch) => {
 	try {
 		dispatch(loading(true));
 
-		const post = await serverRequest('fetchPost', postId);
+		const { error, data } = await request(`/posts/${postId}`);
 
-		dispatch(setPost(post));
-		return post;
+		if (!error) {
+			dispatch(setPost(data));
+		} else {
+			console.error(error);
+			throw new Error(error);
+		}
 	} catch (e) {
-		console.error('Ошибка с запроса на сервер post:', e);
+		console.error('Ошибка с запроса на сервер post:', e.message);
 		throw e;
 	} finally {
 		dispatch(loading(false));

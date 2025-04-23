@@ -2,16 +2,14 @@ import styled from 'styled-components';
 import { Icon } from '../../../../../../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { modalOpen } from '../../../../../../../store/actions/app/modal-open';
-import { useRequestServer } from '../../../../../../../hooks';
-import { CLOSE_MODAL, deletePostAsync, selectRole } from '../../../../../../../store';
+import { CLOSE_MODAL, deletePostAsync, selectRoleId } from '../../../../../../../store';
 import { useNavigate } from 'react-router-dom';
 import { ROLE } from '../../../../../../../constants';
 
-const SpecialPanelContainer = ({ className, id, publisedAt, editButton, onClick }) => {
+const SpecialPanelContainer = ({ className, id, publishedAt, editButton, onClick }) => {
 	const dispatch = useDispatch();
-	const serverRequest = useRequestServer();
 	const navigate = useNavigate();
-	const role = useSelector(selectRole);
+	const role = useSelector(selectRoleId);
 	const access = [ROLE.ADMIN];
 
 	const deletePost = (id) => {
@@ -19,7 +17,7 @@ const SpecialPanelContainer = ({ className, id, publisedAt, editButton, onClick 
 			modalOpen({
 				text: 'Вы уверены, что хотите удалить статью? ',
 				onConfirm: async () => {
-					await dispatch(deletePostAsync(serverRequest, id));
+					await dispatch(deletePostAsync(id));
 					navigate('/');
 					dispatch(CLOSE_MODAL);
 				},
@@ -29,10 +27,10 @@ const SpecialPanelContainer = ({ className, id, publisedAt, editButton, onClick 
 
 	return (
 		<div className={className}>
-			{publisedAt && (
+			{publishedAt && (
 				<div className="published-at">
 					<Icon id="fa-calendar-o" margin="0 7px 0 0" size="24px" />
-					{publisedAt}
+					{publishedAt}
 				</div>
 			)}
 			{access.includes(role) && (
@@ -54,7 +52,7 @@ const SpecialPanelContainer = ({ className, id, publisedAt, editButton, onClick 
 							onClick={() => onClick()}
 						/>
 					)}
-					{publisedAt && (
+					{publishedAt && (
 						<Icon
 							cursor="pointer"
 							id="fa-trash-o"

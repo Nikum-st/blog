@@ -1,9 +1,14 @@
+import { request } from '../../../utils/request-server';
 import { deletePost } from './delete-post';
 
-export const deletePostAsync = (serverRequest, id) => async (dispatch) => {
+export const deletePostAsync = (id) => async (dispatch) => {
 	try {
-		await serverRequest('deletePost', id);
-		return dispatch(deletePost(id));
+		const { error, data } = await request(`/posts/${id}`, 'DELETE');
+		if (!error) {
+			console.error(error);
+		} else {
+			await dispatch(deletePost(id));
+		}
 	} catch (e) {
 		console.error(e);
 	}

@@ -1,1 +1,1 @@
-export const selectRole = ({ user }) => user.roleId;
+export const selectRoleId = ({ user }) => user.roleId;

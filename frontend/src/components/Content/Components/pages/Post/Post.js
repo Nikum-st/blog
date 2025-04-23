@@ -4,27 +4,25 @@ import { Wrapper } from '../../../../components';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useMatch } from 'react-router-dom';
-import { useRequestServer } from '../../../../../hooks';
-import { selectPost, selectRole, setPostAsync } from '../../../../../store';
+import { selectPost, selectRoleId, setPostAsync } from '../../../../../store';
 import { PostForm } from './components/PostForm/PostForm';
 
 const PostContainer = ({ className }) => {
 	const [error, setError] = useState(null);
 	const post = useSelector(selectPost);
-	const role = useSelector(selectRole);
+	const role = useSelector(selectRoleId);
 	const params = useParams();
 	const dispatch = useDispatch();
-	const serverRequest = useRequestServer();
 	const isEditing = !!useMatch('/post/:id/edit');
 	const isCreating = !!useMatch('/post');
 
 	useEffect(() => {
 		if (!isCreating) {
-			dispatch(setPostAsync(serverRequest, params.id)).catch(() =>
-				setError(`Нет связи с сервером. Попробуйте позже`),
+			dispatch(setPostAsync(params.id)).catch((e) =>
+				setError(e.message || 'Нет связи с сервером. Попробуйте позже'),
 			);
 		}
-	}, [dispatch, serverRequest, params.id, isCreating, isEditing, role]);
+	}, [dispatch, params.id, isCreating, isEditing, role]);
 
 	return (
 		<Wrapper error={error}>

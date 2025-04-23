@@ -1,4 +1,4 @@
-import { H2, Wrapper } from '../../../../components';
+import { ErrorMessage, H2, Wrapper } from '../../../../components';
 import styled from 'styled-components';
 import { TableHeader } from './components/TableHeader';
 import { UserRaw } from './components/UserRaw';
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRequestServer } from '../../../../../hooks/use-request-server';
 import { useNavigate } from 'react-router-dom';
 import { ROLE } from '../../../../../constants';
+import { request } from '../../../../../utils/request-server';
 
 export const UsersContainer = ({ className }) => {
 	const [roles, setRoles] = useState([]);
@@ -23,8 +24,8 @@ export const UsersContainer = ({ className }) => {
 			try {
 				dispatch(loading(true));
 				const [userResult, rolesResult] = await Promise.all([
-					serverRequest('fetchUsers'),
-					serverRequest(`fetchRolesFromServer`),
+					request('/admin/users'),
+					request('/admin/roles'),
 				]);
 				if (userResult?.error || rolesResult?.error) {
 					setError(userResult.error || rolesResult.error);
@@ -32,8 +33,8 @@ export const UsersContainer = ({ className }) => {
 						navigate('/');
 					}, 1500);
 				}
-				setRoles(rolesResult?.res);
-				dispatch(setUsers(userResult?.res));
+				setRoles(rolesResult?.data);
+				dispatch(setUsers(userResult?.data));
 			} catch (e) {
 				console.error(e);
 			} finally {
@@ -48,18 +49,22 @@ export const UsersContainer = ({ className }) => {
 			<div className={className}>
 				<H2>Пользователи</H2>
 				<TableHeader />
-				{users
-					?.filter(({ id }) => id !== userId)
-					?.map(({ id, login, registredAt, roleId }) => (
-						<UserRaw
-							id={id}
-							key={id}
-							login={login}
-							registredAt={registredAt}
-							roleId={roleId}
-							roles={roles}
-						/>
-					))}
+				{!users || users.length === 0 ? (
+					<ErrorMessage>Список пользователей пуст</ErrorMessage>
+				) : (
+					users
+						.filter(({ id }) => id !== userId)
+						.map(({ id, login, registredAt, roleId }) => (
+							<UserRaw
+								id={id}
+								key={id}
+								login={login}
+								registredAt={registredAt}
+								roleId={roleId}
+								roles={roles}
+							/>
+						))
+				)}
 			</div>
 		</Wrapper>
 	);

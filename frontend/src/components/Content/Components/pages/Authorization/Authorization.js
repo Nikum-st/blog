@@ -8,6 +8,7 @@ import { yupSchema } from '../../../../../yup/yup';
 import { loading, setUser } from '../../../../../store';
 import { useDispatch } from 'react-redux';
 import { useRequestServer } from '../../../../../hooks';
+import { request } from '../../../../../utils/request-server';
 
 const LinkStiled = styled(Link)`
 	margin: 17px;
@@ -24,7 +25,6 @@ const AuthorizationContainer = ({ className }) => {
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const serverRequest = useRequestServer();
 
 	const {
 		register,
@@ -40,14 +40,14 @@ const AuthorizationContainer = ({ className }) => {
 
 	const onSubmit = async ({ login, password }) => {
 		dispatch(loading(true));
-		await serverRequest('authorization', login, password)
-			.then(({ error, res }) => {
+		await request('user/authorize', 'POST', { login, password })
+			.then(({ error, data }) => {
 				if (error) {
 					setErrorServer(error);
 					return;
 				}
-				dispatch(setUser(res));
-				sessionStorage.setItem('user', JSON.stringify(res));
+				dispatch(setUser(data));
+				sessionStorage.setItem('user', JSON.stringify(data));
 				navigate('/');
 			})
 			.catch(() => {

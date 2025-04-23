@@ -5,5 +5,4 @@ export const initialStateUser = JSON.parse(userCurent) || {
 	id: null,
 	login: null,
 	roleId: ROLE.GUEST,
-	session: null,
 };

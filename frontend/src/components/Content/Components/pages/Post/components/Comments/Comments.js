@@ -3,30 +3,35 @@ import styled from 'styled-components';
 import { ErrorMessage, Icon } from '../../../../../../components';
 import { Comment } from './components/Comment';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIdUser, addNewCommentAsync } from '../../../../../../../store';
-import { useRequestServer } from '../../../../../../../hooks';
+import {
+	addNewCommentAsync,
+	selectPostId,
+	selectRoleId,
+} from '../../../../../../../store';
+import { ROLE } from '../../../../../../../constants';
 
-const CommentsContainer = ({ className, comments, postId }) => {
+const CommentsContainer = ({ className, comments }) => {
 	const [newComment, setNewComment] = useState();
-	const userId = useSelector(selectIdUser);
-	const serverRequest = useRequestServer();
-	const dispatch = useDispatch();
 	const [error, setError] = useState(null);
+	const dispatch = useDispatch();
+	const postId = useSelector(selectPostId);
+	const roleId = useSelector(selectRoleId);
 
-	const handleCommentSubmit = async (postId, userId, content) => {
+	const handleCommentSubmit = async (postId, content) => {
 		if (!newComment) return;
+		if (roleId === ROLE.GUEST) {
+			setError('Зарегестрируйтесь');
+			return;
+		}
 
 		try {
-			const result = await dispatch(
-				addNewCommentAsync(serverRequest, postId, userId, content),
-			);
-			if (result.error) {
-				setError(result.error);
-				return;
-			}
+			await dispatch(addNewCommentAsync(postId, { content })).catch((e) => {
+				setError(e);
+			});
+
 			setNewComment('');
 		} catch (error) {
-			console.error('Error submitting comment:', error);
+			setError(error.message);
 		}
 	};
 
@@ -43,19 +48,19 @@ const CommentsContainer = ({ className, comments, postId }) => {
 					id="fa-paper-plane-o"
 					margin="0 12px "
 					size="28px"
-					onClick={() => handleCommentSubmit(postId, userId, newComment)}
+					onClick={() => handleCommentSubmit(postId, newComment)}
 					cursor="pointer"
 				/>
 			</div>
 
 			<div className="comments">
-				{comments?.map(({ id, author, content, publisedAt }) => (
+				{comments?.map(({ id, author, content, registredAt }) => (
 					<Comment
 						key={id}
 						id={id}
 						author={author}
 						content={content}
-						publisedAt={publisedAt}
+						publisedAt={registredAt}
 					/>
 				))}
 			</div>

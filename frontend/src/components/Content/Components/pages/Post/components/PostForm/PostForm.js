@@ -3,7 +3,7 @@ import { ErrorMessage, Icon, Input, Wrapper } from '../../../../../../components
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	CLOSE_MODAL,
-	selectRole,
+	selectRoleId,
 	setPostAsync,
 	savePostAsync,
 	CLEAR_POST,
@@ -12,16 +12,14 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import { SpecialPanel } from '../SpecialPanel/SpecialPanel';
 import { sanitizeContent } from './utils/sanitize-content';
-import { useRequestServer } from '../../../../../../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { ROLE } from '../../../../../../../constants';
 
 const PostFormContainer = ({ className, post, isCreating }) => {
 	const [error, setError] = useState(null);
 	const [errorInput, setErrorInput] = useState(null);
-	const role = useSelector(selectRole);
+	const role = useSelector(selectRoleId);
 	const dispatch = useDispatch();
-	const serverRequest = useRequestServer();
 	const navigate = useNavigate();
 
 	const contentRef = useRef(null);
@@ -30,7 +28,7 @@ const PostFormContainer = ({ className, post, isCreating }) => {
 
 	useEffect(() => {
 		if (!post && !isCreating) {
-			dispatch(setPostAsync(serverRequest, post.id)).catch(() =>
+			dispatch(setPostAsync(post.id)).catch(() =>
 				setError(`Нет связи с сервером. Попробуйте позже`),
 			);
 		} else if (isCreating) {
@@ -38,7 +36,7 @@ const PostFormContainer = ({ className, post, isCreating }) => {
 			if (imageRef.current) imageRef.current.value = '';
 			if (titleRef.current) titleRef.current.value = '';
 		}
-	}, [role, dispatch, post, serverRequest, isCreating]);
+	}, [role, dispatch, post, isCreating]);
 
 	const saveNewData = () => {
 		const editData = {
@@ -56,11 +54,16 @@ const PostFormContainer = ({ className, post, isCreating }) => {
 			modalOpen({
 				text: 'Сохранить изменения?',
 				onConfirm: async () => {
-					const result = await dispatch(
-						savePostAsync(serverRequest, post?.id, editData),
-					);
-					dispatch(CLOSE_MODAL);
-					navigate(`/post/${result.id}`);
+					try {
+						const result = await dispatch(savePostAsync(post?.id, editData));
+						dispatch(CLOSE_MODAL);
+						navigate(`/post/${result?.id}`);
+					} catch (e) {
+						dispatch(CLOSE_MODAL);
+						setError(
+							e.message || e || 'Нет связи с сервером. Попробуйте позже',
+						);
+					}
 				},
 			}),
 		);
