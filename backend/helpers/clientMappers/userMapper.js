@@ -1,8 +1,10 @@
+const moment = require('moment');
+
 module.exports = function (user) {
 	return {
 		login: user.login,
-		registredAt: user.createdAt,
-		role: user.role,
+		registredAt: moment(new Date(user.createdAt)).format('L, HH:mm'),
+		roleId: user.roleId,
 		id: user._id,
 	};
 };

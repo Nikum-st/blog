@@ -4,7 +4,7 @@ module.exports = async (userId, newRole) => {
 	try {
 		const user = await User.findByIdAndUpdate(
 			userId,
-			{ role: newRole },
+			{ roleId: newRole },
 			{
 				returnDocument: 'after',
 			},

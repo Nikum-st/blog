@@ -17,9 +17,9 @@ const schemaUser = mongoose.Schema(
 			required: true,
 			validate: () => /^\w*$/,
 		},
-		role: {
+		roleId: {
 			type: Number,
-			default: ROLE.GUEST,
+			default: ROLE.READER,
 		},
 	},
 	{ timestamps: true },

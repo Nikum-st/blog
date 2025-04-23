@@ -1,7 +1,7 @@
 const ROLE = require('../constants/role');
 
 module.exports = async function (req, res, next) {
-	const role = req.user.role;
+	const role = req.user.roleId;
 
 	if (!role && !!role) {
 		return res.status(401).send({ error: 'Пользователь не авторизован' });

@@ -20,7 +20,7 @@ router.post('/register', async (req, res) => {
 	} catch (error) {
 		if (error.code === 11000) {
 			return res.send({
-				error: 'Этот пользователь или адрес электронной почты уже существует',
+				error: 'Этот пользователь  уже существует',
 			});
 		}
 		return res.send({ error: error.message });

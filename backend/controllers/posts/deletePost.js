@@ -6,8 +6,6 @@ module.exports = async (postId) => {
 		if (!post) {
 			throw new Error('Удаляемый пост не найден');
 		}
-
-		console.log(post);
 	} catch (e) {
 		throw e;
 	}

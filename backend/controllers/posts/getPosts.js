@@ -6,7 +6,7 @@ module.exports = async function (search = '', limit = 9, page = 1) {
 			Post.find({ title: { $regex: search, $options: 'i' } })
 				.limit(limit)
 				.skip((page - 1) * limit)
-				.sort({ createdAt: -1 })
+				.sort({ createdAt: -1, _id: -1 })
 				.populate({
 					path: 'comments',
 					populate: 'author',

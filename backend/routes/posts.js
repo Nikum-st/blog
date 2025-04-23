@@ -22,6 +22,9 @@ router.get('/', async (req, res) => {
 			.status(200)
 			.send({ error: null, data: { posts: posts.map(postMapper), lastPage } });
 	} catch (e) {
+		if (e.name === 'CastError') {
+			return res.send({ error: 'Некорректный адрес поста' });
+		}
 		return res.send({ error: e.message, data: null });
 	}
 });
@@ -32,7 +35,7 @@ router.get('/:id', async (req, res) => {
 		return res.status(200).send({ error: null, data: postMapper(post) });
 	} catch (e) {
 		if (e.name === 'CastError') {
-			return res.send({ error: 'Некорректный idURL ' });
+			return res.send({ error: 'Некорректный адрес поста' });
 		}
 		return res.send({ error: e.message, data: null });
 	}
@@ -41,9 +44,9 @@ router.get('/:id', async (req, res) => {
 router.post('/', isAuthorizated, isAdmin, async (req, res) => {
 	try {
 		const newPost = await addPost({
-			title: req.body.title,
-			img: req.body.img,
-			content: req.body.content,
+			title: req.body.newTitle,
+			imageUrl: req.body.newImage,
+			content: req.body.newContent,
 		});
 
 		res.status(200).send({ error: null, data: postMapper(newPost) });
@@ -55,9 +58,9 @@ router.post('/', isAuthorizated, isAdmin, async (req, res) => {
 router.patch('/:id', isAuthorizated, isAdmin, async (req, res) => {
 	try {
 		const updatedPost = await updatePost(req.params.id, {
-			title: req.body.title,
-			img: req.body.img,
-			content: req.body.content,
+			title: req.body.newTitle,
+			imageUrl: req.body.newImage,
+			content: req.body.newContent,
 		});
 
 		res.status(200).send({ error: null, data: postMapper(updatedPost) });

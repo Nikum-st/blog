@@ -7,7 +7,7 @@ const postSchema = new mongoose.Schema(
 			type: String,
 			require: true,
 		},
-		img: {
+		imageUrl: {
 			type: String,
 			require: true,
 			validate: {
@@ -18,6 +18,9 @@ const postSchema = new mongoose.Schema(
 		content: {
 			type: String,
 			require: true,
+		},
+		publisedAt: {
+			type: String,
 		},
 		comments: [
 			{

@@ -2,12 +2,11 @@ const Post = require('../../models/Post');
 
 module.exports = async function (postId, newValue) {
 	try {
-		return Post.findByIdAndUpdate(postId, newValue, {
+		const asdsad = Post.findByIdAndUpdate(postId, newValue, {
 			returnDocument: 'after',
-		}).populate({
-			path: 'comments',
-			populate: 'author',
 		});
+
+		return asdsad;
 	} catch (e) {
 		throw e;
 	}

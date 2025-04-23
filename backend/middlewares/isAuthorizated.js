@@ -3,7 +3,6 @@ const User = require('../models/user');
 
 module.exports = async function (req, res, next) {
 	const tokenFromCookie = req.cookies.token;
-
 	if (!tokenFromCookie) {
 		return res.status(401).send({ error: 'Пользователь не авторизован' });
 	}

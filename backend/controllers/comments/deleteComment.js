@@ -3,11 +3,18 @@ const Post = require('../../models/Post');
 
 module.exports = async (commentId, postId) => {
 	try {
-		await Comment.findByIdAndDelete(commentId);
+		const comment = await Comment.findByIdAndDelete(commentId);
+		if (!comment) {
+			throw new Error(`Удаляемый комментарий не найден`);
+		}
 
-		await Post.findByIdAndUpdate(postId, {
+		const post = await Post.findByIdAndUpdate(postId, {
 			$pull: { comments: commentId },
 		});
+
+		if (!post) {
+			throw new Error(`Пост не найден`);
+		}
 	} catch (e) {
 		throw e;
 	}

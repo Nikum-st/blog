@@ -26,7 +26,7 @@ module.exports = async (login, password) => {
 		const newToken = token.create({
 			id: user._id,
 			login: user.login,
-			role: user.role,
+			roleId: user.roleId,
 		});
 
 		return { user, token: newToken };
