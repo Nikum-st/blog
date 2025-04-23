@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Icon } from '../../../../../components/Icon/Icon';
+import PropTypes from 'prop-types';
 
 const PostCardContainer = ({ className, id, title, publishedAt, imageUrl, comments }) => {
 	return (
@@ -60,3 +61,11 @@ export const PostCard = styled(PostCardContainer)`
 		display: flex;
 	}
 `;
+
+PostCard.propTypes = {
+	id: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
+	publishedAt: PropTypes.string.isRequired,
+	imageUrl: PropTypes.string.isRequired,
+	comments: PropTypes.string.isRequired,
+};

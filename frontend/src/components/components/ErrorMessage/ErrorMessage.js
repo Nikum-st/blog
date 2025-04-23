@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import styled from 'styled-components';
 
 const ErrorMessageContainer = ({ className, children }) => (
@@ -13,3 +15,7 @@ export const ErrorMessage = styled(ErrorMessageContainer)`
 	background: #f65b5b75;
 	justify-content: center;
 `;
+
+ErrorMessage.propTypes = {
+	children: PropTypes.node,
+};

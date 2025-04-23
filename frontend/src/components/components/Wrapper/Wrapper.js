@@ -3,6 +3,7 @@ import { selectLoading, selectRoleId } from '../../../store';
 import { Loader } from '../Loader/Loader';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { checkAccess } from '../../../utils/check-access';
+import PropTypes from 'prop-types';
 
 export const Wrapper = ({ children, error, access }) => {
 	const role = useSelector(selectRoleId);
@@ -18,4 +19,9 @@ export const Wrapper = ({ children, error, access }) => {
 	) : (
 		children
 	);
+};
+
+Wrapper.propTypes = {
+	error: PropTypes.string,
+	access: PropTypes.array,
 };

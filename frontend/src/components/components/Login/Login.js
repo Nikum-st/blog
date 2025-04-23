@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import styled from 'styled-components';
 
 const LoginContainer = ({ className, children }) => (
@@ -9,3 +11,7 @@ export const Login = styled(LoginContainer)`
 	font-weight: ${({ weight }) => weight};
 	margin: ${({ margin } = 'auto') => margin};
 `;
+
+Login.propTypes = {
+	children: PropTypes.node.isRequired,
+};

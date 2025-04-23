@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const IconContainer = ({ className, id, onClick }) => (
 	<div className={className} onClick={onClick}>
@@ -12,3 +13,8 @@ export const Icon = styled(IconContainer)`
 	margin: ${({ margin = '0px' }) => margin};
 	cursor: ${({ cursor = 'auto' }) => cursor};
 `;
+
+Icon.propTypes = {
+	id: PropTypes.string.isRequired,
+	onClick: PropTypes.func,
+};

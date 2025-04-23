@@ -5,8 +5,9 @@ import { ROLE } from '../../../../../../constants';
 import { useDispatch } from 'react-redux';
 import { deletUserAsync } from '../../../../../../store';
 import { request } from '../../../../../../utils/request-server';
+import PropTypes from 'prop-types';
 
-const UserRawContainer = ({ className, id, login, registredAt, roleId, roles, key }) => {
+const UserRawContainer = ({ className, id, login, registredAt, roleId, roles }) => {
 	const [selectedRole, setSelectedRole] = useState(roleId);
 	const [error, setError] = useState(null);
 	const [savedRole, setSavedRole] = useState(null);
@@ -34,7 +35,7 @@ const UserRawContainer = ({ className, id, login, registredAt, roleId, roles, ke
 	};
 	return (
 		<>
-			<div className={className} key={key}>
+			<div className={className}>
 				<div className="login">{login}</div>
 				<div className="date-registration">{registredAt}</div>
 				<select value={selectedRole} onChange={handleChangeRole}>
@@ -102,3 +103,17 @@ export const UserRaw = styled(UserRawContainer)`
 		font-size: 18px;
 	}
 `;
+
+UserRaw.propTypes = {
+	id: PropTypes.string.isRequired,
+	login: PropTypes.string.isRequired,
+	registredAt: PropTypes.string.isRequired,
+	roleId: PropTypes.number.isRequired,
+	roles: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.number.isRequired,
+			name: PropTypes.string.isRequired,
+		}),
+	).isRequired,
+	key: PropTypes.string.isRequired,
+};
