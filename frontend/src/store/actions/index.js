@@ -13,4 +13,3 @@ export * from './post/update-post-async';
 export * from './post/CLEAR-POST';
 export * from './posts/delete-post-async';
 export * from './posts/set-posts-async';
-export * from './posts/set-posts-search-async';

@@ -5,7 +5,6 @@ import { UserRaw } from './components/UserRaw';
 import { useEffect, useState } from 'react';
 import { loading, selectIdUser, selectUsers, setUsers } from '../../../../../store';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRequestServer } from '../../../../../hooks/use-request-server';
 import { useNavigate } from 'react-router-dom';
 import { ROLE } from '../../../../../constants';
 import { request } from '../../../../../utils/request-server';
@@ -14,7 +13,6 @@ export const UsersContainer = ({ className }) => {
 	const [roles, setRoles] = useState([]);
 	const [error, setError] = useState(null);
 	const dispatch = useDispatch();
-	const serverRequest = useRequestServer();
 	const navigate = useNavigate();
 	const users = useSelector(selectUsers);
 	const userId = useSelector(selectIdUser);
@@ -42,7 +40,7 @@ export const UsersContainer = ({ className }) => {
 			}
 		};
 		getRoles();
-	}, [dispatch, serverRequest, navigate]);
+	}, [dispatch, navigate]);
 
 	return (
 		<Wrapper error={error} access={[ROLE.ADMIN]}>

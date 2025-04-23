@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { useRequestServer } from '../../../../../hooks';
 import styled from 'styled-components';
 import { useEffect, useMemo, useState } from 'react';
 import { selectPosts, setPostsAsync } from '../../../../../store';
@@ -40,17 +39,6 @@ const MainPageContainer = ({ className }) => {
 
 	const debounceRequest = useMemo(() => debounce(setSendSearchMode, 2000), []);
 
-	// когда делал запросы с BFF(без mongoose и бэка),
-	// из-за проблем с title_like page limit, сделал отдельный запрос при нажатии на кнопку поиска
-
-	// const submitSearch = async () => {
-	// 	if (!searchValue) {
-	// 		return;
-	// 	}
-	// 	setSendSearchMode(true);
-	// 	await dispatch(setPostsSearchAsync(serverRequest, searchValue));
-	// };
-
 	const onSearch = ({ target }) => {
 		if (target.value.length === 0) {
 			setSendSearchMode(false);
@@ -65,7 +53,6 @@ const MainPageContainer = ({ className }) => {
 				searchValue={searchValue}
 				onSearch={onSearch}
 				setSendSearchMode={setSendSearchMode}
-				// submitSearch={submitSearch}
 			/>
 			<div className={className}>
 				{posts?.map(({ id, title, publishedAt, imageUrl, comments }) => (

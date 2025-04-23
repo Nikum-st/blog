@@ -3,7 +3,7 @@ import { deletePost } from './delete-post';
 
 export const deletePostAsync = (id) => async (dispatch) => {
 	try {
-		const { error, data } = await request(`/posts/${id}`, 'DELETE');
+		const { error } = await request(`/posts/${id}`, 'DELETE');
 		if (!error) {
 			console.error(error);
 		} else {
