@@ -22,7 +22,7 @@
 		"styled-components": "^6.1.14",
 		"yup": "^1.6.1"
 	},
-	"proxy": "http://localhost:2000/api",
+	"proxy": "http://localhost:2000",
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
@@ -50,5 +50,9 @@
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
-	}
+	},
+	"description": "1. Области хранения данных: - БД на базе JSON-Server; - BFF; - redux store;",
+	"main": "index.js",
+	"author": "",
+	"license": "ISC"
 }
