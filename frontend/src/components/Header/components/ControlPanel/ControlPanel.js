@@ -10,6 +10,8 @@ import { ROLE } from '../../../../constants';
 const Container = styled.div`
 	display: flex;
 	align-items: center;
+	width: 210px;
+	justify-content: flex-end;
 `;
 
 const ControlPanelContainer = ({ className }) => {
@@ -21,7 +23,9 @@ const ControlPanelContainer = ({ className }) => {
 	return roleId === ROLE.GUEST ? (
 		<Container>
 			<Link to="/login">
-				<Button width="85px">Войти</Button>
+				<div style={{ height: '210px', display: 'flex', alignItems: 'center' }}>
+					<Button width="85px">Войти</Button>
+				</div>
 			</Link>
 		</Container>
 	) : roleAllowed.includes(roleId) ? (
