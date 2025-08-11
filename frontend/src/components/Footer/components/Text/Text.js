@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const TextContainer = ({ className }) => (
 	<div className={className}>
 		<p>Блог веб-разработчика</p>
-		<p>web@developer.ru</p>
+		<p>nikitaumanskiy1998@mail.ru</p>
 	</div>
 );
 

@@ -6,7 +6,7 @@ import { Weather } from './components/Weather/Weather';
 const FooterContainer = ({ className }) => (
 	<footer className={className}>
 		<Text />
-		<div style={{ display: `flex` }}>
+		<div style={{ display: `flex`, alignItems: 'center' }}>
 			<Date />
 			<Weather />
 		</div>
