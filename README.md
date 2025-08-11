@@ -51,6 +51,12 @@ cd frontend
 npm start
 The server will be available at http://localhost:2000, and the client at http://localhost:3000.
 
+## Contact
+For questions and suggestions, feel free to reach out:
+
+📧 Email: nikita.italia2023@gmail.com, nikitaumanskiy1998@mail.ru,
+📱 Telegram / WhatsApp: +39 380 14-666-17(it), +7 914 744-30-83(rus)
+
 (rus)
 Developer Blog — это одностраничное приложение (SPA), построенное с использованием React,Redux, Express и MongoDB. Проект демонстрирует современный подход к разработке full-stack приложений и служит отличным примером для изучения лучших практик.
 
@@ -96,6 +102,11 @@ npm install
 ### В одном терминале
 cd backend
 npm run server
+
+## Контакты 
+
+📧 Email: nikita.italia2023@gmail.com, nikitaumanskiy1998@mail.ru,
+📱 Telegram / WhatsApp: +39 380 14-666-17(it), +7 914 744-30-83(rus)
 
 ### В другом терминале
 cd frontend
