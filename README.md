@@ -3,7 +3,7 @@
 (eng)
 Developer Blog is a single-page application (SPA) built using React, Redux, Express and MongoDB. The project demonstrates a modern approach to developing full-stack applications and serves as a great example for learning best practices.
 
-🎨 ## Design and style
+## 🎨 Design and style
 
 The application is made in a minimalist, “old-school” web style - without unnecessary embellishments and complex visual effects.
 This design was chosen deliberately:
@@ -13,7 +13,7 @@ Nostalgia and honesty - the “good old days” style helps to emphasize the ess
 
 This approach helps to focus on the main thing - on the information itself and the user experience, without unnecessary visual noise.
 
-🔧 ## Key features:
+## 🔧 Key features:
 
 User registration and authentication: secure login and registration process.
 Post management (CRUD): creating, reading, updating and deleting posts.
@@ -21,12 +21,12 @@ Comments: the ability to leave and view comments on posts.
 Search: search functionality for post content.
 Pagination: convenient navigation through pages with posts.
 
-🛠 ## Tech stack:
+## 🛠 Tech stack:
 Frontend: React, JSX, Redux, Styled Components
 Backend: Node.js, Express
 Database: MongoDB, JSON Server(early stage)
 
-🚀 ## Launch the project:
+## 🚀 Launch the project:
 
 Clone the repository:
 git clone https://github.com/Nikum-st/blog.git
