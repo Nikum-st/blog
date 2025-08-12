@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useMatch } from 'react-router-dom';
 import { selectPost, selectRoleId, setPostAsync } from '../../../../../store';
 import { PostForm } from './components/PostForm/PostForm';
+import { useTranslation } from 'react-i18next';
 
 const PostContainer = ({ className }) => {
 	const [error, setError] = useState(null);
@@ -16,13 +17,15 @@ const PostContainer = ({ className }) => {
 	const isEditing = !!useMatch('/post/:id/edit');
 	const isCreating = !!useMatch('/post');
 
+	const { t } = useTranslation();
+
 	useEffect(() => {
 		if (!isCreating) {
 			dispatch(setPostAsync(params.id)).catch((e) =>
-				setError(e.message || 'Нет связи с сервером. Попробуйте позже'),
+				setError(e.message || t('Ошибка_сервера')),
 			);
 		}
-	}, [dispatch, params.id, isCreating, isEditing, role]);
+	}, [dispatch, params.id, isCreating, isEditing, role, t]);
 
 	return (
 		<Wrapper error={error}>

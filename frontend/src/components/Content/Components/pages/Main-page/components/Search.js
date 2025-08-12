@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 import { Icon, Input } from '../../../../../components';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 const SearchContainer = ({ className, searchValue, onSearch, setSendSearchMode }) => {
+	const { t } = useTranslation();
 	return (
 		<div className={className}>
 			<Input
 				onChange={onSearch}
 				value={searchValue}
-				placeholder="Поиск по заголовку..."
+				placeholder={t('Поиск_заголовок')}
 			/>
 			<Icon
 				onClick={() => setSendSearchMode(true)}

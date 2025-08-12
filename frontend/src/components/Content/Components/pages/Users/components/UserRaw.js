@@ -6,12 +6,15 @@ import { useDispatch } from 'react-redux';
 import { deletUserAsync } from '../../../../../../store';
 import { request } from '../../../../../../utils/request-server';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 const UserRawContainer = ({ className, id, login, registredAt, roleId, roles }) => {
 	const [selectedRole, setSelectedRole] = useState(roleId);
 	const [error, setError] = useState(null);
 	const [savedRole, setSavedRole] = useState(null);
 	const dispatch = useDispatch();
+
+	const { t } = useTranslation();
 
 	const handleChangeRole = ({ target }) => {
 		setSelectedRole(target.value);
@@ -41,10 +44,10 @@ const UserRawContainer = ({ className, id, login, registredAt, roleId, roles }) 
 				<select value={selectedRole} onChange={handleChangeRole}>
 					{roles
 						?.filter(({ id }) => id !== ROLE.GUEST)
-						.map(({ id, name }) => {
+						.map(({ id }) => {
 							return (
 								<option key={id} value={id}>
-									{name}
+									{t(`roles.${String(id)}`)}
 								</option>
 							);
 						})}

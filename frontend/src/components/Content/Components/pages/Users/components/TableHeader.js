@@ -1,12 +1,16 @@
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-const TableHeaderContainer = ({ className }) => (
-	<div className={className}>
-		<div className="login-label">Логин</div>
-		<div className="date-rgistration-label">Дата регистрации</div>
-		<div className="role-label">Роль</div>
-	</div>
-);
+const TableHeaderContainer = ({ className }) => {
+	const { t } = useTranslation();
+	return (
+		<div className={className}>
+			<div className="login-label">{t('Логин')}</div>
+			<div className="date-rgistration-label">{t('Дата регистрации')}</div>
+			<div className="role-label">{t('Роль')}</div>
+		</div>
+	);
+};
 
 export const TableHeader = styled(TableHeaderContainer)`
 	display: flex;

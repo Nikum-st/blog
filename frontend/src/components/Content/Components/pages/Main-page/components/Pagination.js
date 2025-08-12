@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { Button } from '../../../../../components/Button/Button';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 const PaginationContainer = ({ className, page, setPage, lastPage }) => {
+	const { t } = useTranslation();
 	return (
 		<div className={className}>
 			<Button
@@ -11,7 +13,7 @@ const PaginationContainer = ({ className, page, setPage, lastPage }) => {
 					setPage(1);
 				}}
 			>
-				В начало
+				{t('В начало')}
 			</Button>
 			<Button
 				disabled={page === 1}
@@ -19,16 +21,16 @@ const PaginationContainer = ({ className, page, setPage, lastPage }) => {
 					setPage(page - 1);
 				}}
 			>
-				Предыдущая
+				{t('Предыдущая')}
 			</Button>
-			<div className="current-page">Страница: {page}</div>
+			<div className="current-page">{t('Страница')}</div>
 			<Button
 				disabled={page === lastPage}
 				onClick={() => {
 					setPage(page + 1);
 				}}
 			>
-				Следующая
+				{t('Следующая')}
 			</Button>
 			<Button
 				disabled={page === lastPage}
@@ -36,7 +38,7 @@ const PaginationContainer = ({ className, page, setPage, lastPage }) => {
 					setPage(lastPage);
 				}}
 			>
-				В конец
+				{t('В конец')}
 			</Button>
 		</div>
 	);

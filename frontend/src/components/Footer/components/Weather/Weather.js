@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { fetchWeatherByIP } from './utils/fetchWeatherByIP';
+import { useTranslation } from 'react-i18next';
 
 const Text = styled.div`
 	text-align: center;
@@ -22,9 +23,11 @@ const WeatherContainer = ({ className }) => {
 	const [icon, setIcon] = useState(null);
 	const [temp, setTemp] = useState('');
 
+	const { t } = useTranslation();
+
 	useEffect(() => {
 		fetchWeatherByIP().then((data) => {
-			setCity(data.name);
+			setCity(t(data.name));
 			setIcon(`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
 
 			const temp =

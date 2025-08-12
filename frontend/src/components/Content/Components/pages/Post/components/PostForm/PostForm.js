@@ -14,6 +14,7 @@ import { SpecialPanel } from '../SpecialPanel/SpecialPanel';
 import { sanitizeContent } from './utils/sanitize-content';
 import { useNavigate } from 'react-router-dom';
 import { ROLE } from '../../../../../../../constants';
+import { useTranslation } from 'react-i18next';
 
 const PostFormContainer = ({ className, post, isCreating }) => {
 	const [error, setError] = useState(null);
@@ -26,17 +27,17 @@ const PostFormContainer = ({ className, post, isCreating }) => {
 	const imageRef = useRef(null);
 	const titleRef = useRef(null);
 
+	const { t } = useTranslation();
+
 	useEffect(() => {
 		if (!post && !isCreating) {
-			dispatch(setPostAsync(post.id)).catch(() =>
-				setError(`Нет связи с сервером. Попробуйте позже`),
-			);
+			dispatch(setPostAsync(post.id)).catch(() => setError(`Ошибка_сервера`));
 		} else if (isCreating) {
 			dispatch(CLEAR_POST);
 			if (imageRef.current) imageRef.current.value = '';
 			if (titleRef.current) titleRef.current.value = '';
 		}
-	}, [role, dispatch, post, isCreating]);
+	}, [role, dispatch, post, isCreating, t]);
 
 	const saveNewData = () => {
 		const editData = {
@@ -46,13 +47,13 @@ const PostFormContainer = ({ className, post, isCreating }) => {
 		};
 
 		if (!editData.newContent || !editData.newImage || !editData.newTitle) {
-			setErrorInput('Все поля должны быть заполнены');
+			setErrorInput('Поля_заполнены');
 			return;
 		}
 
 		dispatch(
 			modalOpen({
-				text: 'Сохранить изменения?',
+				text: t('Сохранить'),
 				onConfirm: async () => {
 					try {
 						const result = await dispatch(savePostAsync(post?.id, editData));
@@ -60,9 +61,7 @@ const PostFormContainer = ({ className, post, isCreating }) => {
 						navigate(`/post/${result?.id}`);
 					} catch (e) {
 						dispatch(CLOSE_MODAL);
-						setError(
-							e.message || e || 'Нет связи с сервером. Попробуйте позже',
-						);
+						setError(e.message ?? 'Ошибка_сервера');
 					}
 				},
 			}),
@@ -70,14 +69,17 @@ const PostFormContainer = ({ className, post, isCreating }) => {
 	};
 
 	return (
-		<Wrapper error={error} access={[ROLE.ADMIN]}>
-			{errorInput && <ErrorMessage>{errorInput}</ErrorMessage>}
+		<Wrapper
+			error={error === 'Ошибка_сервера' ? t(error) : error}
+			access={[ROLE.ADMIN]}
+		>
+			{errorInput && <ErrorMessage>{t(errorInput)}</ErrorMessage>}
 			<div className={className}>
 				<Input
 					ref={imageRef}
 					defaultValue={post?.imageUrl}
 					width="90%"
-					placeholder="Изображение..."
+					placeholder={t('Изображение')}
 					onChange={() => setErrorInput(null)}
 				/>
 				<Input
@@ -85,7 +87,7 @@ const PostFormContainer = ({ className, post, isCreating }) => {
 					ref={titleRef}
 					defaultValue={post?.title}
 					width="90%"
-					placeholder="Заголовок..."
+					placeholder={t('Заголовок')}
 					onChange={() => setErrorInput(null)}
 				/>
 				{isCreating ? (
@@ -106,8 +108,7 @@ const PostFormContainer = ({ className, post, isCreating }) => {
 				)}
 
 				<label>
-					{' '}
-					Контент
+					{t('Контент')}
 					<div
 						ref={contentRef}
 						suppressContentEditableWarning={true}

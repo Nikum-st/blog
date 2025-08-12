@@ -7,12 +7,14 @@ import {
 	selectOnConfirmModal,
 	selectTextModal,
 } from '../../../store';
+import { useTranslation } from 'react-i18next';
 
 const ModalContainer = ({ className }) => {
 	const text = useSelector(selectTextModal);
 	const dispatch = useDispatch();
 	const onConfirm = useSelector(selectOnConfirmModal);
 	const isOpen = useSelector(selectIsOpenModal);
+	const { t } = useTranslation();
 
 	if (!isOpen) {
 		return;
@@ -25,10 +27,10 @@ const ModalContainer = ({ className }) => {
 				<h3>{text}</h3>
 				<div className="buttons">
 					<Button width="120px" onClick={onConfirm}>
-						Да
+						{t('Да')}
 					</Button>
 					<Button width="120px" onClick={() => dispatch(CLOSE_MODAL)}>
-						Отмена
+						{t('Отмена')}
 					</Button>
 				</div>
 			</div>
