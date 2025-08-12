@@ -8,6 +8,7 @@ import { yupSchema } from '../../../../../yup/yup';
 import { loading, setUser } from '../../../../../store';
 import { useDispatch } from 'react-redux';
 import { request } from '../../../../../utils/request-server';
+import { useTranslation } from 'react-i18next';
 
 const LinkStiled = styled(Link)`
 	margin: 17px;
@@ -24,6 +25,8 @@ const AuthorizationContainer = ({ className }) => {
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+
+	const { t } = useTranslation();
 
 	const {
 		register,
@@ -50,7 +53,7 @@ const AuthorizationContainer = ({ className }) => {
 				navigate('/');
 			})
 			.catch(() => {
-				setErrorServer('Нет связи с сервером. Попробуйте позже');
+				setErrorServer(t('Нет связи с сервером. Попробуйте позже'));
 				return;
 			})
 			.finally(() => {
@@ -68,7 +71,7 @@ const AuthorizationContainer = ({ className }) => {
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<Input
 						type="text"
-						placeholder="Логин..."
+						placeholder={t('Логин')}
 						{...register(`login`, {
 							onChange: () => {
 								setErrorServer(null);
@@ -77,7 +80,7 @@ const AuthorizationContainer = ({ className }) => {
 					/>
 					<Input
 						type="text"
-						placeholder="Пароль..."
+						placeholder={t('Пароль')}
 						{...register(`password`, {
 							onChange: () => {
 								setErrorServer(null);
@@ -85,11 +88,11 @@ const AuthorizationContainer = ({ className }) => {
 						})}
 					/>
 					<Button type="submit" width="100%" disabled={!!errorServer}>
-						Авторизоваться
+						{t('Авторизоваться')}
 					</Button>
 				</form>
 				{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-				<LinkStiled to="/register">Регистрация</LinkStiled>
+				<LinkStiled to="/register">{t('Регистрация')}</LinkStiled>
 			</div>
 		</Wrapper>
 	);

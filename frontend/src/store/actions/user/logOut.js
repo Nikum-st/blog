@@ -2,7 +2,11 @@ import { ACTION_TYPE } from '../../../constants';
 import { request } from '../../../utils/request-server';
 
 export const logOut = () => async (dispatch) => {
-	await request('/user/logout', 'POST');
+	try {
+		await request('/user/logout', 'POST');
+	} catch (e) {
+		console.error(e);
+	}
 
 	sessionStorage.removeItem('user');
 

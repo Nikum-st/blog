@@ -11,6 +11,7 @@ import {
 	selectPostId,
 } from '../../../../../../../../store';
 import { ROLE } from '../../../../../../../../constants';
+import { useTranslation } from 'react-i18next';
 
 const CommentContainer = ({ className, id, author, content, publisedAt }) => {
 	const login = useSelector(selectLogin);
@@ -18,12 +19,14 @@ const CommentContainer = ({ className, id, author, content, publisedAt }) => {
 	const postId = useSelector(selectPostId);
 	const dispatch = useDispatch();
 
+	const { t } = useTranslation();
+
 	const accessDelete = [ROLE.ADMIN, ROLE.MODERATOR];
 
 	const handleDeleteComment = (id, postId) => {
 		dispatch(
 			modalOpen({
-				text: 'Удалить коментарий?',
+				text: t('Удалить коментарий?'),
 				onConfirm: () => {
 					dispatch(deleteCommentAsync(id, postId));
 					dispatch(CLOSE_MODAL);

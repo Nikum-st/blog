@@ -10,6 +10,7 @@ import { Search } from './components/Search';
 import { PAGINATION_LIMIT } from '../../../../../constants';
 import { ErrorMessage } from '../../../../components';
 import { debounce } from '../../../../../utils/debounce';
+import { useTranslation } from 'react-i18next';
 
 const MainPageContainer = ({ className }) => {
 	const [page, setPage] = useState(1);
@@ -18,6 +19,8 @@ const MainPageContainer = ({ className }) => {
 	const [lastPage, setLastPage] = useState(1);
 	const [errorServer, setErrorServer] = useState(null);
 	const dispatch = useDispatch();
+
+	const { t } = useTranslation();
 
 	const posts = useSelector(selectPosts);
 
@@ -29,13 +32,13 @@ const MainPageContainer = ({ className }) => {
 				);
 				setLastPage(last);
 			} catch (e) {
-				setErrorServer(`Нет связи с сервером. Попробуйте позже`, e);
+				setErrorServer(t(`Ошибка_сервера`));
 			}
 		};
 
 		fetchPosts();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dispatch, page, sendSearchMode]);
+	}, [dispatch, page, sendSearchMode, t]);
 
 	const debounceRequest = useMemo(() => debounce(setSendSearchMode, 2000), []);
 
@@ -70,7 +73,7 @@ const MainPageContainer = ({ className }) => {
 				<Pagination page={page} lastPage={lastPage} setPage={setPage} />
 			)}
 			{!posts.length && sendSearchMode && (
-				<ErrorMessage>Статьи не найдены</ErrorMessage>
+				<ErrorMessage>{t('Статьи не найдены')}</ErrorMessage>
 			)}
 		</Wrapper>
 	);

@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { selectLogin, selectRoleId } from '../../../../store';
 import { OutLog } from './OutLog/OutLog';
 import { ROLE } from '../../../../constants';
+import { useTranslation } from 'react-i18next';
 
 const Container = styled.div`
 	display: flex;
@@ -19,12 +20,14 @@ const ControlPanelContainer = ({ className }) => {
 	const roleId = useSelector(selectRoleId);
 	const login = useSelector(selectLogin);
 
+	const { t } = useTranslation();
+
 	const roleAllowed = [ROLE.ADMIN];
 	return roleId === ROLE.GUEST ? (
 		<Container>
 			<Link to="/login">
-				<div style={{ height: '210px', display: 'flex', alignItems: 'center' }}>
-					<Button width="85px">Войти</Button>
+				<div style={{ display: 'flex', alignItems: 'center' }}>
+					<Button width="85px">{t('Войти')}</Button>
 				</div>
 			</Link>
 		</Container>

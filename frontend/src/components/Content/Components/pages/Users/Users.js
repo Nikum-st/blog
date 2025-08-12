@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ROLE } from '../../../../../constants';
 import { request } from '../../../../../utils/request-server';
+import { useTranslation } from 'react-i18next';
 
 export const UsersContainer = ({ className }) => {
 	const [roles, setRoles] = useState([]);
@@ -16,6 +17,8 @@ export const UsersContainer = ({ className }) => {
 	const navigate = useNavigate();
 	const users = useSelector(selectUsers);
 	const userId = useSelector(selectIdUser);
+
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		const getRoles = async () => {
@@ -45,10 +48,10 @@ export const UsersContainer = ({ className }) => {
 	return (
 		<Wrapper error={error} access={[ROLE.ADMIN]}>
 			<div className={className}>
-				<H2>Пользователи</H2>
+				<H2>{t('Пользователи')}</H2>
 				<TableHeader />
 				{!users || users.length === 0 ? (
-					<ErrorMessage>Список пользователей пуст</ErrorMessage>
+					<ErrorMessage>{t('Список пользователей пуст')}</ErrorMessage>
 				) : (
 					users
 						.filter(({ id }) => id !== userId)

@@ -9,6 +9,7 @@ import {
 	selectRoleId,
 } from '../../../../../../../store';
 import { ROLE } from '../../../../../../../constants';
+import { useTranslation } from 'react-i18next';
 
 const CommentsContainer = ({ className, comments }) => {
 	const [newComment, setNewComment] = useState();
@@ -17,10 +18,12 @@ const CommentsContainer = ({ className, comments }) => {
 	const postId = useSelector(selectPostId);
 	const roleId = useSelector(selectRoleId);
 
+	const { t } = useTranslation();
+
 	const handleCommentSubmit = async (postId, content) => {
 		if (!newComment) return;
 		if (roleId === ROLE.GUEST) {
-			setError('Зарегестрируйтесь');
+			setError(t('Зарегестрируйтесь'));
 			return;
 		}
 
@@ -41,7 +44,7 @@ const CommentsContainer = ({ className, comments }) => {
 			<div className="new-comment">
 				<textarea
 					value={newComment}
-					placeholder="Комментарий..."
+					placeholder={t('Комментарий...')}
 					onChange={({ target }) => setNewComment(target.value)}
 				></textarea>
 				<Icon

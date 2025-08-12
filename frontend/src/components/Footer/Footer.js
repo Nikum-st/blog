@@ -2,11 +2,13 @@ import styled from 'styled-components';
 import { Text } from './components/Text/Text';
 import { Date } from './components/Date/Date';
 import { Weather } from './components/Weather/Weather';
+import { Language } from './components/language/language';
 
 const FooterContainer = ({ className }) => (
 	<footer className={className}>
 		<Text />
 		<div style={{ display: `flex`, alignItems: 'center' }}>
+			<Language />
 			<Date />
 			<Weather />
 		</div>

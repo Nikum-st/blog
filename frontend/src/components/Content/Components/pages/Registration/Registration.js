@@ -8,12 +8,15 @@ import { useDispatch } from 'react-redux';
 import { loading, setUser } from '../../../../../store';
 import styled from 'styled-components';
 import { request } from '../../../../../utils/request-server';
+import { useTranslation } from 'react-i18next';
 
 export const RegistrationContainer = ({ className }) => {
 	const [errorServer, setErrorServer] = useState(null);
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+
+	const { t } = useTranslation();
 
 	const onSubmit = async ({ login, password }) => {
 		dispatch(loading(true));
@@ -28,7 +31,7 @@ export const RegistrationContainer = ({ className }) => {
 				navigate('/');
 			})
 			.catch(() => {
-				setErrorServer('Нет связи с сервером. Попробуйте позже');
+				setErrorServer(t('Ошибка_сервера'));
 			})
 			.finally(() => {
 				dispatch(loading(false));
@@ -57,11 +60,11 @@ export const RegistrationContainer = ({ className }) => {
 	return (
 		<Wrapper>
 			<div className={className}>
-				<H2>Регистрация</H2>
+				<H2>{t('Регистрация')}</H2>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<Input
 						type="text"
-						placeholder="Логин..."
+						placeholder={t('Логин')}
 						{...register(`login`, {
 							onChange: () => {
 								setErrorServer(null);
@@ -70,7 +73,7 @@ export const RegistrationContainer = ({ className }) => {
 					/>
 					<Input
 						type="text"
-						placeholder="Пароль..."
+						placeholder={t('Пароль')}
 						{...register(`password`, {
 							onChange: () => {
 								setErrorServer(null);
@@ -79,7 +82,7 @@ export const RegistrationContainer = ({ className }) => {
 					/>
 					<Input
 						type="text"
-						placeholder="Повторите пароль..."
+						placeholder={t('Повторите_пароль')}
 						{...register(`passcheck`, {
 							onChange: () => {
 								setErrorServer(null);
@@ -87,7 +90,7 @@ export const RegistrationContainer = ({ className }) => {
 						})}
 					/>
 					<Button type="submit" width="100%" disabled={!!errorServer}>
-						Зарегестрироваться
+						{t('Зарегестрироваться')}
 					</Button>
 				</form>
 				{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}

@@ -1,14 +1,17 @@
 import { useDispatch } from 'react-redux';
 import { Icon } from '../../../../components';
 import { logOut, modalOpen, CLOSE_MODAL } from '../../../../../store';
+import { useTranslation } from 'react-i18next';
 
 export const OutLog = () => {
 	const dispatch = useDispatch();
 
+	const { t } = useTranslation();
+
 	const onLogOut = () => {
 		dispatch(
 			modalOpen({
-				text: 'Вы уверены, что хотите выйти?',
+				text: t('Уверены_выйти'),
 				onConfirm: () => {
 					dispatch(logOut());
 					dispatch(CLOSE_MODAL);
