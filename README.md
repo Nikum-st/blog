@@ -20,6 +20,7 @@ Post management (CRUD): creating, reading, updating and deleting posts.
 Comments: the ability to leave and view comments on posts.
 Search: search functionality for post content.
 Pagination: convenient navigation through pages with posts.
+Two languages: switch the interface between Russian and English.
 
 ## 🛠 Tech stack:
 Frontend: React, JSX, Redux, Styled Components
@@ -51,6 +52,10 @@ cd frontend
 npm start
 The server will be available at http://localhost:2000, and the client at http://localhost:3000.
 
+## Administrator access:
+login: Admin,
+password: 1234qwer
+
 ## Contact
 For questions and suggestions, feel free to reach out:
 
@@ -77,6 +82,7 @@ Developer Blog — это одностраничное приложение (SPA
 Комментарии: возможность оставлять и просматривать комментарии к постам.
 Поиск: функционал поиска по содержимому постов.
 Пагинация: удобная навигация по страницам с постами.
+Два языка: переключение интерфейса между русским и английским.
 
 ## 🛠 Технологический стек:
 Frontend: React, JSX, Redux, Styled Components
@@ -102,6 +108,10 @@ npm install
 ### В одном терминале
 cd backend
 npm run server
+
+## Доступ администратора:
+логин: Admin,
+пароль: 1234qwer
 
 ## Контакты 
 
