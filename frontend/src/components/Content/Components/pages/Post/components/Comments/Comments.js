@@ -44,7 +44,7 @@ const CommentsContainer = ({ className, comments }) => {
 			<div className="new-comment">
 				<textarea
 					value={newComment}
-					placeholder={t('Комментарий...')}
+					placeholder={t('Комментарий')}
 					onChange={({ target }) => setNewComment(target.value)}
 				></textarea>
 				<Icon

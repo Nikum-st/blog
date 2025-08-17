@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 import { Button } from '../../../components';
 import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
 
 const LanguageContainer = ({ className }) => {
+	const [textButton, setTextButton] = useState('en');
 	const { t, i18n } = useTranslation();
 
 	const toggleLang = () => {
 		const nextLang = i18n.language === 'en' ? 'ru' : 'en';
-
+		setTextButton(() => (nextLang === 'en' ? 'ru' : 'en'));
 		i18n.changeLanguage(nextLang);
 	};
 
@@ -15,11 +17,8 @@ const LanguageContainer = ({ className }) => {
 		<div className={className}>
 			<div className="text">{t('Язык')}</div>
 			<div style={{ display: 'flex' }}>
-				<Button onClick={toggleLang} style={{ width: 'auto' }}>
-					en
-				</Button>
-				<Button onClick={toggleLang} style={{ width: 'auto' }}>
-					ru
+				<Button onClick={toggleLang} style={{ width: '35px' }}>
+					{textButton}
 				</Button>
 			</div>
 		</div>
