@@ -19,8 +19,9 @@ export const RegistrationContainer = ({ className }) => {
 	const { t } = useTranslation();
 
 	const onSubmit = async ({ login, password }) => {
+		const log = login.trim();
 		dispatch(loading(true));
-		await request('/user/register', 'POST', { login, password })
+		await request('/user/register', 'POST', { log, password })
 			.then(({ error, data }) => {
 				if (error) {
 					setErrorServer(error);

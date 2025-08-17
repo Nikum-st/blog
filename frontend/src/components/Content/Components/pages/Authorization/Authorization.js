@@ -41,8 +41,9 @@ const AuthorizationContainer = ({ className }) => {
 	});
 
 	const onSubmit = async ({ login, password }) => {
+		const log = login.trim();
 		dispatch(loading(true));
-		await request('user/authorize', 'POST', { login, password })
+		await request('user/authorize', 'POST', { log, password })
 			.then(({ error, data }) => {
 				if (error) {
 					setErrorServer(error);
