@@ -54,7 +54,7 @@ The server will be available at http://localhost:2000, and the client at http://
 
 ## Administrator access:
 login: Admin,
-password: 1234qwer
+password: 1234
 
 ## Contact
 For questions and suggestions, feel free to reach out:
